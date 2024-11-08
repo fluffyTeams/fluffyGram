@@ -43,7 +43,10 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
     private int appBarShadowRow;
     private int formatTimeWithSecondsRow;
     private int disableNumberRoundingRow;
+    private int centerTitleRow;
     private int tabletModeRow;
+
+
     private int eventTypeRow;
     private int appearance2Row;
 
@@ -90,6 +93,11 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
                     ((LaunchActivity) getParentActivity()).invalidateTabletMode();
                 }
             }, resourcesProvider);
+        } else if (position == centerTitleRow) {
+            NekoConfig.toggleCenterTitle();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.centerTitle);
+            }
         } else if (position == emojiSetsRow) {
             presentFragment(new NekoEmojiSettingsActivity());
         } else if (position == eventTypeRow) {
@@ -216,6 +224,7 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
         appBarShadowRow = addRow("appBarShadow");
         formatTimeWithSecondsRow = addRow("formatTimeWithSeconds");
         disableNumberRoundingRow = addRow("disableNumberRounding");
+        centerTitleRow = addRow("centerTitleRow");
         eventTypeRow = addRow("eventType");
         tabletModeRow = addRow("tabletMode");
         appearance2Row = addRow();
@@ -294,6 +303,8 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
                         textCell.setTextAndCheck(LocaleController.getString(R.string.DarkenAvatarBackground), NekoConfig.avatarBackgroundDarken, divider);
                     } else if (position == hideAllTabRow) {
                         textCell.setTextAndCheck(LocaleController.getString(R.string.HideAllTab), NekoConfig.hideAllTab, divider);
+                    } else if (position == centerTitleRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.centerTitle), NekoConfig.centerTitle, divider);
                     }
                     break;
                 }
@@ -345,7 +356,7 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
                 return TYPE_SETTINGS;
             } else if (position == hideAllTabRow ||
                     (position > emojiSetsRow && position <= disableNumberRoundingRow) ||
-                    (position > drawerRow && position < drawer2Row)) {
+                    (position > drawerRow && position < drawer2Row) || position == centerTitleRow) {
                 return TYPE_CHECK;
             } else if (position == appearanceRow || position == foldersRow) {
                 return TYPE_HEADER;

@@ -317,6 +317,7 @@
     <string name="shouldNotTrustMe">Just Trust me ok?</string>
     <string name="shouldNotTrustMeAbout">Allow resend from secret chat</string>
 
+    <string name="centerTitle">Center title</string>
 
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>

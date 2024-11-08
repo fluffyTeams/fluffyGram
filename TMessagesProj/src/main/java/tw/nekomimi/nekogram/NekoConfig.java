@@ -147,6 +147,8 @@ public class NekoConfig {
 
     public static boolean springAnimation = false;
 
+    public static boolean centerTitle = false;
+
     public static boolean wsEnableTLS = true;
     public static String wsDomain;
 
@@ -250,6 +252,7 @@ public class NekoConfig {
             hideStories = preferences.getBoolean("hideStories", false);
             quickForward = preferences.getBoolean("quickForward", false);
             springAnimation = preferences.getBoolean("springAnimation", false);
+            centerTitle = preferences.getBoolean("centerTitle", false);
             reducedColors = preferences.getBoolean("reducedColors", false);
             ignoreContentRestriction = preferences.getBoolean("ignoreContentRestriction", false);
             fixLinkPreview = preferences.getBoolean("fixLinkPreview", false);
@@ -477,6 +480,14 @@ public class NekoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("springAnimation", spring);
+        editor.apply();
+    }
+
+    public static void toggleCenterTitle() {
+        centerTitle = !centerTitle;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("centerTitle", centerTitle);
         editor.apply();
     }
 
