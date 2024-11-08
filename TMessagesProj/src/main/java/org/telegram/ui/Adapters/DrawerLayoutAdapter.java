@@ -324,10 +324,10 @@ public class DrawerLayoutAdapter extends RecyclerListView.SelectionAdapter {
             items.add(new Item(20, LocaleController.getString("ArchivedChats", R.string.ArchivedChats), R.drawable.msg_archive));
             showDivider = true;
         }
-//        if (MessagesController.getInstance(UserConfig.selectedAccount).storiesEnabled()) {
-//            items.add(new Item(17, LocaleController.getString(R.string.ProfileStories), R.drawable.msg_menu_stories));
-//            showDivider = true;
-//        }
+        if (MessagesController.getInstance(UserConfig.selectedAccount).storiesEnabled()) {
+            items.add(new Item(17, LocaleController.getString(R.string.ProfileStories), R.drawable.msg_menu_stories));
+            showDivider = true;
+        }
         showDivider = true;
         if (ApplicationLoader.applicationLoaderInstance != null) {
             if (ApplicationLoader.applicationLoaderInstance.extendDrawer(items)) {
