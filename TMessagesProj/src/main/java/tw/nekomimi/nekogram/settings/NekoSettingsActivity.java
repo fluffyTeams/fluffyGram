@@ -42,9 +42,11 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
     private int categories2Row;
 
     private int aboutRow;
+    private int aboutForkRow;
     private int channelRow;
     private int websiteRow;
     private int sourceCodeRow;
+    private int sourceCodeForkRow;
     private int translationRow;
     private int donateRow;
     private int about2Row;
@@ -87,7 +89,9 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
             Browser.openUrl(getParentActivity(), "https://nekogram.app");
         } else if (position == sourceCodeRow) {
             Browser.openUrl(getParentActivity(), "https://github.com/Nekogram/Nekogram");
-        } else if (position >= sponsorRow && position < sponsor2Row) {
+        } else if (position == sourceCodeForkRow) {
+            Browser.openUrl(getParentActivity(), "https://github.com/krolchonok/fluffygram");
+        }else if (position >= sponsorRow && position < sponsor2Row) {
             ConfigHelper.News item = news.get(position - sponsorRow);
             Browser.openUrl(getParentActivity(), item.url);
         }
@@ -129,11 +133,14 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
             accessibilityRow = -1;
         }
         categories2Row = addRow();
+        aboutForkRow = addRow("about");
+        sourceCodeForkRow = addRow("sourceCodeForkRow");
 
+        categories2Row = addRow();
         aboutRow = addRow("about");
         channelRow = addRow("channel");
         websiteRow = addRow("website");
-        sourceCodeRow = addRow("sourceCode");
+        sourceCodeRow = addRow("sourceCodeRow");
         translationRow = addRow("translation");
         donateRow = addRow("donate");
         about2Row = addRow();
@@ -165,6 +172,8 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
                         textCell.setTextAndValue(LocaleController.getString(R.string.OfficialSite), "nekogram.app", divider);
                     } else if (position == sourceCodeRow) {
                         textCell.setTextAndValue(LocaleController.getString(R.string.ViewSourceCode), "GitHub", divider);
+                    } else if (position == sourceCodeForkRow) {
+                        textCell.setTextAndValue(LocaleController.getString(R.string.ViewSourceCode), "GitHub", divider);
                     }
                     break;
                 }
@@ -174,6 +183,8 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
                         headerCell.setText(LocaleController.getString(R.string.Categories));
                     } else if (position == aboutRow) {
                         headerCell.setText(LocaleController.getString(R.string.About));
+                    } else if (position == aboutForkRow) {
+                        headerCell.setText(LocaleController.getString(R.string.AboutFork));
                     }
                     break;
                 }
@@ -218,7 +229,7 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
                 return TYPE_SHADOW;
             } else if (position >= channelRow && position < translationRow) {
                 return TYPE_SETTINGS;
-            } else if (position == categoriesRow || position == aboutRow) {
+            } else if (position == categoriesRow || position == aboutRow || position == aboutForkRow) {
                 return TYPE_HEADER;
             } else if (position >= translationRow && position < about2Row) {
                 return TYPE_DETAIL_SETTINGS;

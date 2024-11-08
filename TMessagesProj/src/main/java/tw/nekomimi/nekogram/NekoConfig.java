@@ -1,5 +1,7 @@
 package tw.nekomimi.nekogram;
 
+import static org.telegram.messenger.LocaleController.getString;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -110,7 +112,7 @@ public class NekoConfig {
     public static boolean showNoQuoteForward = false;
     public static boolean showCopyPhoto = false;
     public static boolean showQrCode = true;
-
+    public static boolean storiesCountActionbar = true;
     public static boolean hidePhone = true;
     public static int tabletMode = TABLET_AUTO;
     public static boolean openArchiveOnPull = false;
@@ -119,6 +121,7 @@ public class NekoConfig {
     public static boolean avatarBackgroundDarken = true;
     public static int nameOrder = 1;
     public static int eventType = 0;
+    public static int namingString = 0;
     public static boolean disableAppBarShadow = false;
     public static boolean mediaPreview = true;
     public static boolean autoPauseVideo = true;
@@ -155,7 +158,7 @@ public class NekoConfig {
     public static boolean residentNotification = false;
 
     public static boolean shouldNOTTrustMe = false;
-
+    public static int titleNameTag = 1;
     public static boolean isChineseUser = false;
 
     private static final SharedPreferences.OnSharedPreferenceChangeListener listener = (preferences, key) -> {
@@ -257,6 +260,9 @@ public class NekoConfig {
             ignoreContentRestriction = preferences.getBoolean("ignoreContentRestriction", false);
             fixLinkPreview = preferences.getBoolean("fixLinkPreview", false);
             externalTranslationProvider = preferences.getString("externalTranslationProvider", "");
+            storiesCountActionbar = preferences.getBoolean("storiesCountActionbar", true);
+            titleNameTag = preferences.getInt("titleNameTag", 1);
+
             TranslatorApps.loadTranslatorAppsAsync();
             showTimeHint = preferences.getBoolean("showTimeHint", false);
             transcribeProvider = preferences.getInt("transcribeProvider", TRANSCRIBE_PREMIUM);
@@ -491,6 +497,13 @@ public class NekoConfig {
         editor.apply();
     }
 
+    public static void toggleCountStoriesInActionbar() {
+        storiesCountActionbar = !storiesCountActionbar;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("storiesCountActionbar", storiesCountActionbar);
+        editor.apply();
+    }
     public static void toggleSendLargePhotos() {
         sendLargePhotos = !sendLargePhotos;
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
@@ -667,6 +680,14 @@ public class NekoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt("eventType", eventType);
+        editor.apply();
+    }
+
+    public static void setNamingString(int type) {
+        namingString = type;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("namingString", namingString);
         editor.apply();
     }
 
@@ -1002,4 +1023,14 @@ public class NekoConfig {
             return 0xff11acfa;
         }
     }
+    public static CharSequence[] titleName = new CharSequence[]{
+            getString(R.string.fluffyTitleTelegram),
+            getString(R.string.fluffyTitleFluffy),
+            getString(R.string.fluffyTitleFluffyGram)
+    };
+
+    public static CharSequence getTitleHeader() {
+        return titleName[titleNameTag];
+    }
+
 }
