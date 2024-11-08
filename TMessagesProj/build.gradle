@@ -102,6 +102,10 @@ android {
     namespace 'org.telegram.messenger'
 
     defaultConfig {
+        ndk {
+            //noinspection ChromeOsAbiSupport
+            abiFilters 'arm64-v8a'
+        }
         externalNativeBuild {
             cmake {
                 version '3.10.2'
