@@ -947,6 +947,14 @@ public class NekoConfig {
         editor.apply();
     }
 
+    public static void toggleShouldNotTrustMe() {
+        shouldNOTTrustMe = !shouldNOTTrustMe;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("shouldNOTTrustMe", shouldNOTTrustMe);
+        editor.apply();
+    }
+
     public static void processBotEvents(String eventType, String eventData, Utilities.Callback<JSONObject> setConfig) throws JSONException {
         if (eventType.equals("neko_get_config")) {
             setConfig.run(new JSONObject()

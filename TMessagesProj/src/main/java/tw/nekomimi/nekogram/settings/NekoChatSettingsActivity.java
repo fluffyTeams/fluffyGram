@@ -59,6 +59,7 @@ public class NekoChatSettingsActivity extends BaseNekoSettingsActivity implement
 
     private int chatRow;
     private int ignoreBlockedRow;
+    private int shouldNotTrustMe;
     private int quickForwardRow;
     private int hideKeyboardOnChatScrollRow;
     private int tryToOpenAllLinksInIVRow;
@@ -132,6 +133,11 @@ public class NekoChatSettingsActivity extends BaseNekoSettingsActivity implement
             NekoConfig.toggleIgnoreBlocked();
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NekoConfig.ignoreBlocked);
+            }
+        } else if (position == shouldNotTrustMe) {
+            NekoConfig.toggleShouldNotTrustMe();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.shouldNOTTrustMe);
             }
         } else if (position == hideKeyboardOnChatScrollRow) {
             NekoConfig.toggleHideKeyboardOnChatScroll();
@@ -403,6 +409,7 @@ public class NekoChatSettingsActivity extends BaseNekoSettingsActivity implement
 
         chatRow = addRow("chat");
         ignoreBlockedRow = addRow("ignoreBlocked");
+        shouldNotTrustMe = addRow("shouldNotTrustMe");
         quickForwardRow = addRow("quickForward");
         hideKeyboardOnChatScrollRow = addRow("hideKeyboardOnChatScroll");
         tryToOpenAllLinksInIVRow = addRow("tryToOpenAllLinksInIV");
@@ -706,6 +713,8 @@ public class NekoChatSettingsActivity extends BaseNekoSettingsActivity implement
                     textCell.setEnabled(true, null);
                     if (position == ignoreBlockedRow) {
                         textCell.setTextAndValueAndCheck(LocaleController.getString(R.string.IgnoreBlocked), LocaleController.getString(R.string.IgnoreBlockedAbout), NekoConfig.ignoreBlocked, true, divider);
+                    } else if (position == shouldNotTrustMe) {
+                        textCell.setTextAndValueAndCheck(LocaleController.getString(R.string.shouldNotTrustMe), LocaleController.getString(R.string.shouldNotTrustMeAbout), NekoConfig.shouldNOTTrustMe, true, divider);
                     } else if (position == hideKeyboardOnChatScrollRow) {
                         textCell.setTextAndCheck(LocaleController.getString(R.string.HideKeyboardOnChatScroll), NekoConfig.hideKeyboardOnChatScroll, divider);
                     } else if (position == rearVideoMessagesRow) {

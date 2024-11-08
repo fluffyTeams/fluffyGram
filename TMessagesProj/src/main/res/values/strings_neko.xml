@@ -314,6 +314,10 @@
     <string name="CloudflareAPIToken">API Token</string>
     <string name="CloudflareCredentialsDialog">Configure Cloudflare Account ID and API Token.\n**How to obtain?**</string>
 
+    <string name="shouldNotTrustMe">Just Trust me ok?</string>
+    <string name="shouldNotTrustMeAbout">Allow resend from secret chat</string>
+
+
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>
     <string name="AccSeekbarHeading">Seekbar settings</string>
