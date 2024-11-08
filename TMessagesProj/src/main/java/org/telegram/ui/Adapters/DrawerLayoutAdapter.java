@@ -319,8 +319,10 @@ public class DrawerLayoutAdapter extends RecyclerListView.SelectionAdapter {
             showDivider = true;
         }
 
+        items.add(null);
         items.add(new Item(97, LocaleController.getString(R.string.NekoSettings), R.drawable.msg_settings));
         items.add(new Item(98, LocaleController.getString(R.string.Devices), R.drawable.menu_devices));
+        items.add(null);
 
         MessagesController messagesController = MessagesController.getInstance(UserConfig.selectedAccount);
         boolean hasArchive = NekoConfig.hideAllTab && messagesController.getDialogFilters().size() > 1 && messagesController.dialogs_dict.get(DialogObject.makeFolderDialogId(1)) != null;
