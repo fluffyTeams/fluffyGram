@@ -687,6 +687,12 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                     args.putLong("dialog_id", UserConfig.getInstance(currentAccount).getClientUserId());
                     args.putInt("type", MediaActivity.TYPE_STORIES);
                     presentFragment(new MediaActivity(args, null));
+                } else if (id == 98 ) {
+                    presentFragment(new SessionsActivity(0));
+                    drawerLayoutContainer.closeDrawer(true);
+                } else if (id == 97 ) {
+                    presentFragment(new NekoSettingsActivity());
+                    drawerLayoutContainer.closeDrawer(true);
                 }
             }
         });
