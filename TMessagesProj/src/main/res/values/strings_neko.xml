@@ -334,6 +334,8 @@
 
     <string name="fluffyLocalPremium">Local premium function</string>
 
+    <string name="fluffyGhost">Ghost Busters</string>
+    <string name="fluffyStoriesDontMarkAsViewed">Stories Mark As Viewed</string>
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>
     <string name="AccSeekbarHeading">Seekbar settings</string>

@@ -36,7 +36,10 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
     private int avatarBackgroundDarkenRow;
     private int hidePhoneRow;
     private int drawer2Row;
+    private int drawer3Row;
 
+    private int ghostRow;
+    private int markStoriesAsReadRow;
     private int appearanceRow;
     private int emojiSetsRow;
     private int mediaPreviewRow;
@@ -165,12 +168,17 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
             }
             parentLayout.setHeaderShadow(NekoConfig.disableAppBarShadow ? null : parentLayout.getParentActivity().getDrawable(R.drawable.header_shadow).mutate());
             parentLayout.rebuildAllFragmentViews(false, false);
+        } else if (position == markStoriesAsReadRow) {
+            NekoConfig.toggleStoriesMarkAsView();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.storiesMarkAsViewed);
+            }
         } else if (position == mediaPreviewRow) {
             NekoConfig.toggleMediaPreview();
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NekoConfig.mediaPreview);
             }
-        } else if (position == removeCountStoriesRow) {
+        }else if (position == removeCountStoriesRow) {
             NekoConfig.toggleCountStoriesInActionbar();
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NekoConfig.storiesCountActionbar);
@@ -236,6 +244,11 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
         }
         hidePhoneRow = addRow("hidePhone");
         drawer2Row = addRow();
+
+        ghostRow = addRow("ghostRow");
+        markStoriesAsReadRow = addRow("markStoriesAsReadRow");
+
+        drawer3Row = addRow();
 
         appearanceRow = addRow("appearance");
         emojiSetsRow = addRow("emojiSets");
@@ -337,6 +350,8 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
                         textCell.setTextAndCheck(LocaleController.getString(R.string.centerTitle), NekoConfig.centerTitle, divider);
                     } else if (position == removeCountStoriesRow) {
                         textCell.setTextAndCheck(LocaleController.getString(R.string.removeCountStories), NekoConfig.storiesCountActionbar, divider);
+                    } else if (position == markStoriesAsReadRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.fluffyStoriesDontMarkAsViewed), NekoConfig.storiesMarkAsViewed, divider);
                     }
                     break;
                 }
@@ -346,6 +361,8 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
                         headerCell.setText(LocaleController.getString(R.string.ChangeChannelNameColor2));
                     } else if (position == foldersRow) {
                         headerCell.setText(LocaleController.getString(R.string.Filters));
+                    } else if (position == ghostRow) {
+                        headerCell.setText(LocaleController.getString(R.string.fluffyGhost));
                     }
                     break;
                 }
@@ -382,16 +399,18 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
 
         @Override
         public int getItemViewType(int position) {
-            if (position == appearance2Row || position == drawer2Row) {
+            if (position == ghostRow) {
+                return TYPE_HEADER;
+            } else if (position == appearance2Row || position == drawer2Row || position == drawer3Row) {
                 return TYPE_SHADOW;
             } else if (position == eventTypeRow || position == tabsTitleTypeRow || position == tabletModeRow || position == titleNameRow) {
                 return TYPE_SETTINGS;
             } else if (position == hideAllTabRow ||
                     (position > emojiSetsRow && position <= disableNumberRoundingRow) ||
-                    (position > drawerRow && position < drawer2Row) || position == centerTitleRow || position ==
-                    removeCountStoriesRow) {
+                    (position > drawerRow && position < drawer2Row) || (position > drawer2Row && position < drawer3Row) || position == centerTitleRow || position ==
+                    removeCountStoriesRow || position == markStoriesAsReadRow) {
                 return TYPE_CHECK;
-            } else if (position == appearanceRow || position == foldersRow) {
+            } else if (position == appearanceRow || position == foldersRow ) {
                 return TYPE_HEADER;
             } else if (position == folders2Row) {
                 return TYPE_INFO_PRIVACY;

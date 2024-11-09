@@ -117,6 +117,7 @@ public class NekoConfig {
     public static boolean showCopyPhoto = false;
     public static boolean showQrCode = true;
     public static boolean storiesCountActionbar = true;
+    public static boolean storiesMarkAsViewed = true;
     public static boolean hidePhone = true;
     public static int tabletMode = TABLET_AUTO;
     public static boolean openArchiveOnPull = false;
@@ -266,6 +267,7 @@ public class NekoConfig {
             externalTranslationProvider = preferences.getString("externalTranslationProvider", "");
             storiesCountActionbar = preferences.getBoolean("storiesCountActionbar", true);
             titleNameTag = preferences.getInt("titleNameTag", 1);
+            storiesMarkAsViewed = preferences.getBoolean("storiesMarkAsViewed", true);
 
             localPremium = preferences.getBoolean("localPremium", false);
             TranslatorApps.loadTranslatorAppsAsync();
@@ -992,6 +994,13 @@ public class NekoConfig {
         editor.apply();
     }
 
+    public static void toggleStoriesMarkAsView() {
+        storiesMarkAsViewed = !storiesMarkAsViewed;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("storiesMarkAsViewed", storiesMarkAsViewed);
+        editor.apply();
+    }
     public static void processBotEvents(String eventType, String eventData, Utilities.Callback<JSONObject> setConfig) throws JSONException {
         if (eventType.equals("neko_get_config")) {
             setConfig.run(new JSONObject()
