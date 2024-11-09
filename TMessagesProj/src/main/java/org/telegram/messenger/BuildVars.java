@@ -46,10 +46,11 @@ public class BuildVars {
         APP_ID = Extra.APP_ID;
         APP_HASH = Extra.APP_HASH;
         PLAYSTORE_APP_URL = Extra.PLAYSTORE_APP_URL;
-        if (ApplicationLoader.applicationContext != null) {
-            SharedPreferences sharedPreferences = ApplicationLoader.applicationContext.getSharedPreferences("systemConfig", Context.MODE_PRIVATE);
-            LOGS_ENABLED = DEBUG_VERSION || sharedPreferences.getBoolean("logsEnabled", DEBUG_VERSION);
-        }
+        LOGS_ENABLED = true;
+//        if (ApplicationLoader.applicationContext != null) {
+//            SharedPreferences sharedPreferences = ApplicationLoader.applicationContext.getSharedPreferences("systemConfig", Context.MODE_PRIVATE);
+//            LOGS_ENABLED = DEBUG_VERSION || sharedPreferences.getBoolean("logsEnabled", DEBUG_VERSION);
+//        }
     }
 
     public static boolean useInvoiceBilling() {

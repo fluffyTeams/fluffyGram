@@ -40,6 +40,12 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
 
     private int ghostRow;
     private int markStoriesAsReadRow;
+    private int sendReadPacketsRow;
+    private int sendOnlinePacketsRow;
+    private int sendUploadProgressRow;
+    private int sendOfflinePacketAfterOnlineRow;
+    private int markReadAfterSendRow;
+
     private int appearanceRow;
     private int emojiSetsRow;
     private int mediaPreviewRow;
@@ -184,7 +190,7 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
                 ((TextCheckCell) view).setChecked(NekoConfig.storiesCountActionbar);
             }
             getNotificationCenter().postNotificationName(NotificationCenter.storiesEnabledUpdate);
-        }else if (position == formatTimeWithSecondsRow) {
+        } else if (position == formatTimeWithSecondsRow) {
             NekoConfig.toggleFormatTimeWithSeconds();
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NekoConfig.formatTimeWithSeconds);
@@ -211,6 +217,31 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
                 listAdapter.notifyItemChanged(tabsTitleTypeRow, PARTIAL);
                 getNotificationCenter().postNotificationName(NotificationCenter.dialogFiltersUpdated);
             }, resourcesProvider);
+        } else if (position == sendReadPacketsRow) {
+            NekoConfig.toggleSendReadPackets();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.sendReadPackets);
+            }
+        } else if (position == sendOnlinePacketsRow) {
+            NekoConfig.toggleSendOnlinePackets();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.sendOnlinePackets);
+            }
+        } else if (position == sendUploadProgressRow) {
+            NekoConfig.toggleSendUploadProgress();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.sendUploadProgress);
+            }
+        } else if (position == sendOfflinePacketAfterOnlineRow) {
+            NekoConfig.toggleSendOfflinePacketAfterOnline();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.sendOfflinePacketAfterOnline);
+            }
+        } else if (position == markReadAfterSendRow) {
+            NekoConfig.toggleMarkReadAfterSend();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.markReadAfterSend);
+            }
         }
     }
 
@@ -247,7 +278,11 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
 
         ghostRow = addRow("ghostRow");
         markStoriesAsReadRow = addRow("markStoriesAsReadRow");
-
+        sendReadPacketsRow = addRow("sendReadPacketsRow");
+        sendOnlinePacketsRow = addRow("sendOnlinePacketsRow");
+        sendUploadProgressRow = addRow("sendUploadProgressRow");
+        sendOfflinePacketAfterOnlineRow = addRow("sendOfflinePacketAfterOnlineRow");
+        markReadAfterSendRow = addRow("markReadAfterSendRow");
         drawer3Row = addRow();
 
         appearanceRow = addRow("appearance");
@@ -352,6 +387,16 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
                         textCell.setTextAndCheck(LocaleController.getString(R.string.removeCountStories), NekoConfig.storiesCountActionbar, divider);
                     } else if (position == markStoriesAsReadRow) {
                         textCell.setTextAndCheck(LocaleController.getString(R.string.fluffyStoriesDontMarkAsViewed), NekoConfig.storiesMarkAsViewed, divider);
+                    } else if (position == sendOnlinePacketsRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.fluffySendOnlinePackets), NekoConfig.sendOnlinePackets, divider);
+                    } else if (position == sendUploadProgressRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.fluffySendUploadProgress), NekoConfig.sendUploadProgress, divider);
+                    } else if (position == sendOfflinePacketAfterOnlineRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.fluffySendOfflinePacketAfterOnline), NekoConfig.sendOfflinePacketAfterOnline, divider);
+                    } else if (position == sendReadPacketsRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.fluffySendReadPackets), NekoConfig.sendReadPackets, divider);
+                    } else if (position == markReadAfterSendRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.fluffyMarkReadAfterSend), NekoConfig.markReadAfterSend, divider);
                     }
                     break;
                 }

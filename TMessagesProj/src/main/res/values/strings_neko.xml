@@ -336,6 +336,13 @@
 
     <string name="fluffyGhost">Ghost Busters</string>
     <string name="fluffyStoriesDontMarkAsViewed">Stories Mark As Viewed</string>
+
+    <string name="fluffySendReadPackets">Send read status</string>
+    <string name="fluffySendOnlinePackets">Send online status</string>
+    <string name="fluffySendUploadProgress">Send typing &amp; upload status</string>
+    <string name="fluffySendOfflinePacketAfterOnline">Immediate offline after online</string>
+    <string name="fluffyMarkReadAfterSend">Send read status after reply</string>
+
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>
     <string name="AccSeekbarHeading">Seekbar settings</string>

@@ -151,9 +151,12 @@ public class NekoConfig {
     public static boolean ignoreContentRestriction = false;
     public static boolean fixLinkPreview = false;
     public static boolean showTimeHint = false;
-
+    public static boolean sendOnlinePackets = true;
+    public static boolean sendUploadProgress = true;
+    public static boolean sendReadPackets = true;
     public static boolean springAnimation = false;
-
+    public static boolean sendOfflinePacketAfterOnline = false;
+    public static boolean markReadAfterSend = false;
     public static boolean centerTitle = false;
 
     public static boolean localPremium = false;
@@ -268,6 +271,12 @@ public class NekoConfig {
             storiesCountActionbar = preferences.getBoolean("storiesCountActionbar", true);
             titleNameTag = preferences.getInt("titleNameTag", 1);
             storiesMarkAsViewed = preferences.getBoolean("storiesMarkAsViewed", true);
+
+            sendOnlinePackets = preferences.getBoolean("sendOnlinePackets", true);
+            sendUploadProgress = preferences.getBoolean("sendUploadProgress", true);
+            sendReadPackets = preferences.getBoolean("sendReadPackets", true);
+            sendOfflinePacketAfterOnline = preferences.getBoolean("sendOfflinePacketAfterOnline", true);
+            markReadAfterSend = preferences.getBoolean("markReadAfterSend", false);
 
             localPremium = preferences.getBoolean("localPremium", false);
             TranslatorApps.loadTranslatorAppsAsync();
@@ -1001,6 +1010,44 @@ public class NekoConfig {
         editor.putBoolean("storiesMarkAsViewed", storiesMarkAsViewed);
         editor.apply();
     }
+    public static void toggleSendReadPackets() {
+        sendReadPackets = !sendReadPackets;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("sendReadPackets", sendReadPackets);
+        editor.apply();
+    }
+    public static void toggleSendOnlinePackets() {
+        sendOnlinePackets = !sendOnlinePackets;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("sendOnlinePackets", sendOnlinePackets);
+        editor.apply();
+    }
+    public static void toggleSendOfflinePacketAfterOnline() {
+        sendOfflinePacketAfterOnline = !sendOfflinePacketAfterOnline;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("sendOfflinePacketAfterOnline", sendOfflinePacketAfterOnline);
+        editor.apply();
+    }
+    public static void toggleMarkReadAfterSend() {
+        markReadAfterSend = !markReadAfterSend;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("markReadAfterSend", markReadAfterSend);
+        editor.apply();
+    }
+    public static void toggleSendUploadProgress() {
+        sendUploadProgress = !sendUploadProgress;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("sendUploadProgress", sendUploadProgress);
+        editor.apply();
+    }
+
+
+
     public static void processBotEvents(String eventType, String eventData, Utilities.Callback<JSONObject> setConfig) throws JSONException {
         if (eventType.equals("neko_get_config")) {
             setConfig.run(new JSONObject()
