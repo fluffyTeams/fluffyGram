@@ -323,6 +323,17 @@
     <string name="AboutFork">About This Fork</string>
 
     <string name="ChangeTitleName">ChangeTitleName</string>
+
+    <string name="fluffySettingsTitle">Set title in Action Bar</string>
+    <string name="fluffySettingsTitleAbout">Select string in action bar</string>
+
+    <string name="fluffyTitleFluffyGram">fluffyGram</string>
+    <string name="fluffyTitleFluffy">fluffy</string>
+    <string name="fluffyTitleTelegram">telegram</string>
+    <string name="fluffyTitleUsername">my username</string>
+
+    <string name="fluffyLocalPremium">Local premium function</string>
+
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>
     <string name="AccSeekbarHeading">Seekbar settings</string>

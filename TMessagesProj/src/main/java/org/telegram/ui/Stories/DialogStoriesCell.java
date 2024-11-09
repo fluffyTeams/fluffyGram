@@ -225,7 +225,7 @@ public class DialogStoriesCell extends FrameLayout implements NotificationCenter
         titleView.setTextColor(getTextColor());
         titleView.setEllipsizeByGradient(true);
         titleView.setTypeface(AndroidUtilities.bold());
-        titleView.setPadding(0, AndroidUtilities.dp(8), 0, AndroidUtilities.dp(8));
+        titleView.setPadding(AndroidUtilities.dp(20), AndroidUtilities.dp(8), 0, AndroidUtilities.dp(8));
         titleView.setTextSize(AndroidUtilities.dp(!AndroidUtilities.isTablet() && getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 18 : 20));
         addView(titleView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
 

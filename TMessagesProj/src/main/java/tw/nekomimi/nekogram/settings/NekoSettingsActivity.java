@@ -40,7 +40,7 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
     private int experimentRow;
     private int accessibilityRow;
     private int categories2Row;
-
+    private int categories2RowFork;
     private int aboutRow;
     private int aboutForkRow;
     private int channelRow;
@@ -132,7 +132,8 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
         } else {
             accessibilityRow = -1;
         }
-        categories2Row = addRow();
+
+        categories2RowFork = addRow();
         aboutForkRow = addRow("about");
         sourceCodeForkRow = addRow("sourceCodeForkRow");
 
@@ -225,9 +226,9 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
         public int getItemViewType(int position) {
             if (position >= sponsorRow && position < sponsor2Row) {
                 return TYPE_DETAIL_SETTINGS;
-            } else if (position == categories2Row || position == about2Row || position == sponsor2Row) {
+            } else if (position == categories2Row || position == about2Row || position == sponsor2Row || position == categories2RowFork) {
                 return TYPE_SHADOW;
-            } else if (position >= channelRow && position < translationRow) {
+            } else if ((position >= channelRow && position < translationRow) || position == sourceCodeForkRow) {
                 return TYPE_SETTINGS;
             } else if (position == categoriesRow || position == aboutRow || position == aboutForkRow) {
                 return TYPE_HEADER;

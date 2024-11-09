@@ -1,10 +1,10 @@
 package tw.nekomimi.nekogram;
 
-import static org.telegram.messenger.LocaleController.getString;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,9 +16,13 @@ import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.BuildConfig;
 import org.telegram.messenger.FileLog;
+import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.NotificationsService;
 import org.telegram.messenger.R;
+import org.telegram.messenger.UserConfig;
+import org.telegram.messenger.UserObject;
 import org.telegram.messenger.Utilities;
+import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.ActionBar.Theme;
 
 import java.util.ArrayList;
@@ -121,7 +125,6 @@ public class NekoConfig {
     public static boolean avatarBackgroundDarken = true;
     public static int nameOrder = 1;
     public static int eventType = 0;
-    public static int namingString = 0;
     public static boolean disableAppBarShadow = false;
     public static boolean mediaPreview = true;
     public static boolean autoPauseVideo = true;
@@ -152,13 +155,14 @@ public class NekoConfig {
 
     public static boolean centerTitle = false;
 
+    public static boolean localPremium = false;
     public static boolean wsEnableTLS = true;
     public static String wsDomain;
 
     public static boolean residentNotification = false;
 
     public static boolean shouldNOTTrustMe = false;
-    public static int titleNameTag = 1;
+    public static int titleNameTag = 0;
     public static boolean isChineseUser = false;
 
     private static final SharedPreferences.OnSharedPreferenceChangeListener listener = (preferences, key) -> {
@@ -263,6 +267,7 @@ public class NekoConfig {
             storiesCountActionbar = preferences.getBoolean("storiesCountActionbar", true);
             titleNameTag = preferences.getInt("titleNameTag", 1);
 
+            localPremium = preferences.getBoolean("localPremium", false);
             TranslatorApps.loadTranslatorAppsAsync();
             showTimeHint = preferences.getBoolean("showTimeHint", false);
             transcribeProvider = preferences.getInt("transcribeProvider", TRANSCRIBE_PREMIUM);
@@ -684,10 +689,10 @@ public class NekoConfig {
     }
 
     public static void setNamingString(int type) {
-        namingString = type;
+        titleNameTag = type;
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt("namingString", namingString);
+        editor.putInt("titleNameTag", titleNameTag);
         editor.apply();
     }
 
@@ -1023,14 +1028,35 @@ public class NekoConfig {
             return 0xff11acfa;
         }
     }
-    public static CharSequence[] titleName = new CharSequence[]{
-            getString(R.string.fluffyTitleTelegram),
-            getString(R.string.fluffyTitleFluffy),
-            getString(R.string.fluffyTitleFluffyGram)
-    };
+    public static String getNickname() {
+        String title;
+
+        TLRPC.User user = UserConfig.getInstance(UserConfig.selectedAccount).getCurrentUser();
+        if (!TextUtils.isEmpty(UserObject.getPublicUsername(user))) {
+            title = UserObject.getPublicUsername(user);
+        } else {
+            title = UserObject.getFirstName(user);
+        }
+
+        return title;
+    }
 
     public static CharSequence getTitleHeader() {
-        return titleName[titleNameTag];
+        return switch (titleNameTag) {
+            case 0 -> LocaleController.getString(R.string.fluffyTitleFluffy);
+            case 1 -> LocaleController.getString(R.string.fluffyTitleFluffyGram);
+            case 2 -> LocaleController.getString(R.string.fluffyTitleTelegram);
+            case 3 -> getNickname();
+            default -> LocaleController.getString(R.string.Nekogram);
+        };
+    }
+
+    public static void toggleLocalPremium() {
+        localPremium = !localPremium;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("localPremium", localPremium);
+        editor.apply();
     }
 
 }

@@ -107,10 +107,12 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
             arrayList.add(LocaleController.getString(R.string.fluffyTitleFluffy));
             arrayList.add(LocaleController.getString(R.string.fluffyTitleFluffyGram));
             arrayList.add(LocaleController.getString(R.string.fluffyTitleTelegram));
-            PopupHelper.show(arrayList, LocaleController.getString(R.string.fluffySettingsTitle), NekoConfig.namingString, getParentActivity(), view, i -> {
+            arrayList.add(LocaleController.getString(R.string.fluffyTitleUsername));
+            PopupHelper.show(arrayList, LocaleController.getString(R.string.fluffySettingsTitle), NekoConfig.titleNameTag, getParentActivity(), view, i -> {
                 NekoConfig.setNamingString(i);
                 listAdapter.notifyItemChanged(titleNameRow, PARTIAL);
-                getNotificationCenter().postNotificationName(NotificationCenter.currentUserPremiumStatusChanged);            }, resourcesProvider);
+                getNotificationCenter().postNotificationName(NotificationCenter.currentUserPremiumStatusChanged);
+                }, resourcesProvider);
         } else if (position == eventTypeRow) {
             ArrayList<String> arrayList = new ArrayList<>();
             arrayList.add(LocaleController.getString(R.string.DependsOnDate));
@@ -285,6 +287,7 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
                             case 0 -> LocaleController.getString(R.string.fluffyTitleFluffy);
                             case 1 -> LocaleController.getString(R.string.fluffyTitleFluffyGram);
                             case 2 -> LocaleController.getString(R.string.fluffyTitleTelegram);
+                            case 3 -> LocaleController.getString(R.string.fluffyTitleUsername);
                             default -> "None";
                         };
                         textCell.setTextAndValue(LocaleController.getString(R.string.ChangeTitleName), value, partial, divider);
