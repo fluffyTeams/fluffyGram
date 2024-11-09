@@ -318,11 +318,7 @@
     <string name="shouldNotTrustMeAbout">Allow resend from secret chat</string>
 
     <string name="centerTitle">Center title</string>
-    <string name="removeCountStories">Show Stories Count</string>
 
-    <string name="AboutFork">About This Fork</string>
-
-    <string name="ChangeTitleName">ChangeTitleName</string>
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>
     <string name="AccSeekbarHeading">Seekbar settings</string>

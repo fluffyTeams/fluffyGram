@@ -1,7 +1,5 @@
 package org.telegram.ui.Stories;
 
-import static tw.nekomimi.nekogram.NekoConfig.getTitleHeader;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
@@ -77,8 +75,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Objects;
-
-import tw.nekomimi.nekogram.NekoConfig;
 
 public class DialogStoriesCell extends FrameLayout implements NotificationCenter.NotificationCenterDelegate {
 
@@ -487,11 +483,7 @@ public class DialogStoriesCell extends FrameLayout implements NotificationCenter
         }
 
         if (!hasOverlayText) {
-            if (NekoConfig.storiesCountActionbar) {
-                titleView.setText(currentTitle, !LocaleController.isRTL);
-            } else {
-                titleView.setText(getTitleHeader(), !LocaleController.isRTL);
-            }
+            titleView.setText(currentTitle, animated && !LocaleController.isRTL);
         }
 
         miniItems.clear();
@@ -952,21 +944,12 @@ public class DialogStoriesCell extends FrameLayout implements NotificationCenter
                         textToSet = spannableString;
                     }
                 }
-                if (NekoConfig.storiesCountActionbar) {
-                    titleView.setText(textToSet, !LocaleController.isRTL);
-                } else {
-                    titleView.setText(getTitleHeader(), !LocaleController.isRTL);
-                }
-
+                titleView.setText(textToSet, !LocaleController.isRTL);
             }
         } else {
             hasOverlayText = false;
             overlayTextId = 0;
-            if (NekoConfig.storiesCountActionbar) {
-                titleView.setText(currentTitle, !LocaleController.isRTL);
-            } else {
-                titleView.setText(getTitleHeader(), !LocaleController.isRTL);
-            }
+            titleView.setText(currentTitle, !LocaleController.isRTL);
         }
         if (hasEllipsizedText) {
             ellipsizeSpanAnimator.addView(titleView);

@@ -44,7 +44,6 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
     private int formatTimeWithSecondsRow;
     private int disableNumberRoundingRow;
     private int centerTitleRow;
-    private int removeCountStoriesRow;
     private int tabletModeRow;
 
 
@@ -52,7 +51,6 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
     private int appearance2Row;
 
     private int foldersRow;
-    private int titleNameRow;
     private int hideAllTabRow;
     private int tabsTitleTypeRow;
     private int folders2Row;
@@ -102,15 +100,6 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
             }
         } else if (position == emojiSetsRow) {
             presentFragment(new NekoEmojiSettingsActivity());
-        } else if (position == titleNameRow) {
-            ArrayList<String> arrayList = new ArrayList<>();
-            arrayList.add(LocaleController.getString(R.string.fluffyTitleFluffy));
-            arrayList.add(LocaleController.getString(R.string.fluffyTitleFluffyGram));
-            arrayList.add(LocaleController.getString(R.string.fluffyTitleTelegram));
-            PopupHelper.show(arrayList, LocaleController.getString(R.string.fluffySettingsTitle), NekoConfig.namingString, getParentActivity(), view, i -> {
-                NekoConfig.setNamingString(i);
-                listAdapter.notifyItemChanged(titleNameRow, PARTIAL);
-                getNotificationCenter().postNotificationName(NotificationCenter.currentUserPremiumStatusChanged);            }, resourcesProvider);
         } else if (position == eventTypeRow) {
             ArrayList<String> arrayList = new ArrayList<>();
             arrayList.add(LocaleController.getString(R.string.DependsOnDate));
@@ -168,13 +157,7 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NekoConfig.mediaPreview);
             }
-        } else if (position == removeCountStoriesRow) {
-            NekoConfig.toggleCountStoriesInActionbar();
-            if (view instanceof TextCheckCell) {
-                ((TextCheckCell) view).setChecked(NekoConfig.storiesCountActionbar);
-            }
-            getNotificationCenter().postNotificationName(NotificationCenter.storiesEnabledUpdate);
-        }else if (position == formatTimeWithSecondsRow) {
+        } else if (position == formatTimeWithSecondsRow) {
             NekoConfig.toggleFormatTimeWithSeconds();
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NekoConfig.formatTimeWithSeconds);
@@ -242,9 +225,7 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
         formatTimeWithSecondsRow = addRow("formatTimeWithSeconds");
         disableNumberRoundingRow = addRow("disableNumberRounding");
         centerTitleRow = addRow("centerTitleRow");
-        removeCountStoriesRow = addRow("removeCountStories");
         eventTypeRow = addRow("eventType");
-        titleNameRow = addRow("titleNameRow");
         tabletModeRow = addRow("tabletMode");
         appearance2Row = addRow();
 
@@ -280,14 +261,6 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
                             default -> LocaleController.getString(R.string.DependsOnDate);
                         };
                         textCell.setTextAndValue(LocaleController.getString(R.string.EventType), value, partial, divider);
-                    } else if (position == titleNameRow) {
-                        String value = switch (NekoConfig.titleNameTag) {
-                            case 0 -> LocaleController.getString(R.string.fluffyTitleFluffy);
-                            case 1 -> LocaleController.getString(R.string.fluffyTitleFluffyGram);
-                            case 2 -> LocaleController.getString(R.string.fluffyTitleTelegram);
-                            default -> "None";
-                        };
-                        textCell.setTextAndValue(LocaleController.getString(R.string.ChangeTitleName), value, partial, divider);
                     } else if (position == tabsTitleTypeRow) {
                         String value = switch (NekoConfig.tabsTitleType) {
                             case NekoConfig.TITLE_TYPE_TEXT ->
@@ -332,8 +305,6 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
                         textCell.setTextAndCheck(LocaleController.getString(R.string.HideAllTab), NekoConfig.hideAllTab, divider);
                     } else if (position == centerTitleRow) {
                         textCell.setTextAndCheck(LocaleController.getString(R.string.centerTitle), NekoConfig.centerTitle, divider);
-                    } else if (position == removeCountStoriesRow) {
-                        textCell.setTextAndCheck(LocaleController.getString(R.string.removeCountStories), NekoConfig.storiesCountActionbar, divider);
                     }
                     break;
                 }
@@ -381,12 +352,11 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
         public int getItemViewType(int position) {
             if (position == appearance2Row || position == drawer2Row) {
                 return TYPE_SHADOW;
-            } else if (position == eventTypeRow || position == tabsTitleTypeRow || position == tabletModeRow || position == titleNameRow) {
+            } else if (position == eventTypeRow || position == tabsTitleTypeRow || position == tabletModeRow) {
                 return TYPE_SETTINGS;
             } else if (position == hideAllTabRow ||
                     (position > emojiSetsRow && position <= disableNumberRoundingRow) ||
-                    (position > drawerRow && position < drawer2Row) || position == centerTitleRow || position ==
-                    removeCountStoriesRow) {
+                    (position > drawerRow && position < drawer2Row) || position == centerTitleRow) {
                 return TYPE_CHECK;
             } else if (position == appearanceRow || position == foldersRow) {
                 return TYPE_HEADER;
