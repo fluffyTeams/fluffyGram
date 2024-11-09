@@ -18,6 +18,11 @@ subprojects {
                     checkReleaseBuilds false
                     disable 'MissingTranslation', 'ExtraTranslation', 'BlockedPrivateApi'
                 }
+                
+                sourceSets.main {
+                    jniLibs.srcDirs = ['./jni/']
+                    res.srcDirs = ['src/main/res', 'src/main/res-solar']
+                }
 
                 compileOptions {
                     sourceCompatibility JavaVersion.VERSION_17

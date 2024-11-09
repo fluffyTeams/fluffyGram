@@ -48,6 +48,7 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
 
     private int appearanceRow;
     private int emojiSetsRow;
+    private int solarIconRow;
     private int mediaPreviewRow;
     private int appBarShadowRow;
     private int formatTimeWithSecondsRow;
@@ -242,6 +243,11 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NekoConfig.markReadAfterSend);
             }
+        } else if (position == solarIconRow) {
+            NekoConfig.toggleUseSolarIcons();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.useSolarIcons);
+            }
         }
     }
 
@@ -287,6 +293,7 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
 
         appearanceRow = addRow("appearance");
         emojiSetsRow = addRow("emojiSets");
+        solarIconRow = addRow("solarIconRow");
         mediaPreviewRow = addRow("mediaPreview");
         appBarShadowRow = addRow("appBarShadow");
         formatTimeWithSecondsRow = addRow("formatTimeWithSeconds");
@@ -397,6 +404,8 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
                         textCell.setTextAndCheck(LocaleController.getString(R.string.fluffySendReadPackets), NekoConfig.sendReadPackets, divider);
                     } else if (position == markReadAfterSendRow) {
                         textCell.setTextAndCheck(LocaleController.getString(R.string.fluffyMarkReadAfterSend), NekoConfig.markReadAfterSend, divider);
+                    } else if (position == solarIconRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.fluffyuseSolarIcons), NekoConfig.useSolarIcons, divider);
                     }
                     break;
                 }

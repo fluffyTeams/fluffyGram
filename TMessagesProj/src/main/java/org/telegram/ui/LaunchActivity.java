@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -231,10 +232,21 @@ import tw.nekomimi.nekogram.helpers.MonetHelper;
 import tw.nekomimi.nekogram.helpers.SettingsHelper;
 import tw.nekomimi.nekogram.helpers.UserHelper;
 import tw.nekomimi.nekogram.helpers.remote.UpdateHelper;
+import tw.nekomimi.nekogram.icons.fluffyResources;
 import tw.nekomimi.nekogram.settings.NekoDonateActivity;
 import tw.nekomimi.nekogram.settings.NekoSettingsActivity;
 
 public class LaunchActivity extends BasePermissionsActivity implements INavigationLayout.INavigationLayoutDelegate, NotificationCenter.NotificationCenterDelegate, DialogsActivity.DialogsActivityDelegate {
+
+    private fluffyResources res = null;
+    @Override
+    public Resources getResources() {
+        return res == null ? res = new fluffyResources(super.getResources()) : res;
+    }
+
+    public void reloadIcons() {
+        res.getActiveIconPack();
+    }
     public final static String EXTRA_FORCE_NOT_INTERNAL_APPS = "force_not_internal_apps";
     public final static Pattern PREFIX_T_ME_PATTERN = Pattern.compile("^(?:http(?:s|)://|)([A-z0-9-]+?)\\.t\\.me");
 

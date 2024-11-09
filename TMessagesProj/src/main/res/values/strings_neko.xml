@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="AppNameNeko" translatable="false">@string/Nekogram</string>
-    <string name="Nekogram" translatable="false">Nekogram</string>
-    <string name="NekogramBeta" translatable="false">Nekogram Beta</string>
+    <string name="AppNameFluffy" translatable="false">@string/fluffyGram</string>
+    <string name="fluffyGram" translatable="false">fluffyGram</string>
+    <string name="fluffyGramBeta" translatable="false">fluffyGram Beta</string>
     <string name="NekoSettings">Neko Settings</string>
     <string name="PreferIPv6">Prefer connecting through IPv6</string>
     <string name="MessageMenu">Message menu</string>
@@ -343,6 +343,7 @@
     <string name="fluffySendOfflinePacketAfterOnline">Immediate offline after online</string>
     <string name="fluffyMarkReadAfterSend">Send read status after reply</string>
 
+    <string name="fluffyuseSolarIcons">Use Solar Icon</string>
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>
     <string name="AccSeekbarHeading">Seekbar settings</string>

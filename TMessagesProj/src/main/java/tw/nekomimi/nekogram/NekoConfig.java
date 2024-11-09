@@ -35,6 +35,9 @@ import app.nekogram.translator.DeepLTranslator;
 import tw.nekomimi.nekogram.helpers.AnalyticsHelper;
 import tw.nekomimi.nekogram.helpers.CloudSettingsHelper;
 import tw.nekomimi.nekogram.helpers.LensHelper;
+import tw.nekomimi.nekogram.icons.BaseIconSet;
+import tw.nekomimi.nekogram.icons.EmptyIconSet;
+import tw.nekomimi.nekogram.icons.SolarIconSet;
 import tw.nekomimi.nekogram.translator.Translator;
 import tw.nekomimi.nekogram.translator.TranslatorApps;
 
@@ -168,6 +171,8 @@ public class NekoConfig {
     public static boolean shouldNOTTrustMe = false;
     public static int titleNameTag = 0;
     public static boolean isChineseUser = false;
+    public static boolean useSolarIcons = true;
+
 
     private static final SharedPreferences.OnSharedPreferenceChangeListener listener = (preferences, key) -> {
         var map = new HashMap<String, String>(1);
@@ -277,6 +282,7 @@ public class NekoConfig {
             sendReadPackets = preferences.getBoolean("sendReadPackets", true);
             sendOfflinePacketAfterOnline = preferences.getBoolean("sendOfflinePacketAfterOnline", true);
             markReadAfterSend = preferences.getBoolean("markReadAfterSend", false);
+            useSolarIcons = preferences.getBoolean("useSolarIcons", true);
 
             localPremium = preferences.getBoolean("localPremium", false);
             TranslatorApps.loadTranslatorAppsAsync();
@@ -1045,6 +1051,13 @@ public class NekoConfig {
         editor.putBoolean("sendUploadProgress", sendUploadProgress);
         editor.apply();
     }
+    public static void toggleUseSolarIcons() {
+        useSolarIcons = !useSolarIcons;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("useSolarIcons", useSolarIcons);
+        editor.apply();
+    }
 
 
 
@@ -1103,7 +1116,7 @@ public class NekoConfig {
             case 1 -> LocaleController.getString(R.string.fluffyTitleFluffyGram);
             case 2 -> LocaleController.getString(R.string.fluffyTitleTelegram);
             case 3 -> getNickname();
-            default -> LocaleController.getString(R.string.Nekogram);
+            default -> LocaleController.getString(R.string.fluffyGram);
         };
     }
 
@@ -1115,4 +1128,7 @@ public class NekoConfig {
         editor.apply();
     }
 
+    public static BaseIconSet getIconPack() {
+        return useSolarIcons ? new SolarIconSet() : new EmptyIconSet();
+    }
 }
