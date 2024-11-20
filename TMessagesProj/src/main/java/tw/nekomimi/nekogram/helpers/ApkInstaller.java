@@ -254,7 +254,7 @@ public final class ApkInstaller {
                 var pendingIntent = PendingIntent.getActivity(context, 0, startIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
                 notificationManager.notify(8732833,
                         new NotificationCompat.Builder(context, "updated")
-                                .setSmallIcon(R.drawable.notification)
+                                .setSmallIcon(R.drawable.iconnotification)
                                 .setColor(NekoConfig.getNotificationColor())
                                 .setShowWhen(false)
                                 .setContentText(LocaleController.getString(R.string.UpdateInstalledNotification))

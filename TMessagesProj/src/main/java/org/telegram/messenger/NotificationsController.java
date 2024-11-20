@@ -4332,7 +4332,7 @@ public class NotificationsController extends BaseController {
             PendingIntent contentIntent = PendingIntent.getActivity(ApplicationLoader.applicationContext, 0, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_ONE_SHOT);
 
             mBuilder.setContentTitle(name)
-                    .setSmallIcon(R.drawable.notification)
+                    .setSmallIcon(R.drawable.iconnotification)
                     .setAutoCancel(true)
                     .setNumber(total_unread_count)
                     .setContentIntent(contentIntent)
@@ -5261,7 +5261,7 @@ public class NotificationsController extends BaseController {
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(ApplicationLoader.applicationContext)
                     .setContentTitle(name)
-                    .setSmallIcon(R.drawable.notification)
+                    .setSmallIcon(R.drawable.iconnotification)
                     .setContentText(text.toString())
                     .setAutoCancel(true)
                     .setNumber(dialogKey.story ? storyPushMessages.size() : messageObjects.size())
