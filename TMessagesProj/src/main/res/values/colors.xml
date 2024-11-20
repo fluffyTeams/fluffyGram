@@ -18,4 +18,7 @@
     <color name="color_user">#f5f5f5</color>
     <color name="color_book">#e9eff5</color>
     <color name="white">#FFFFFF</color>
+
+    <color name="colorBack">#FFFFFF</color>
+
 </resources>
