@@ -344,6 +344,7 @@
     <string name="fluffyMarkReadAfterSend">Send read status after reply</string>
 
     <string name="fluffyuseSolarIcons">Use Solar Icon</string>
+    <string name="ReloadMessage">Reload Message</string>
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>
     <string name="AccSeekbarHeading">Seekbar settings</string>
