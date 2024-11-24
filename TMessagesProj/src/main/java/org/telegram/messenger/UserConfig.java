@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+import tw.nekomimi.nekogram.NekoConfig;
 import tw.nekomimi.nekogram.helpers.PasscodeHelper;
 
 public class UserConfig extends BaseController {
@@ -568,7 +569,7 @@ public class UserConfig extends BaseController {
         if (currentUser == null) {
             return false;
         }
-        return currentUser.premium;
+        return NekoConfig.localPremium || currentUser.premium;
     }
 
     public Long getEmojiStatus() {

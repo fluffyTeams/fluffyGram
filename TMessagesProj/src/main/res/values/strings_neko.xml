@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="AppNameNeko" translatable="false">@string/Nekogram</string>
-    <string name="Nekogram" translatable="false">Nekogram</string>
-    <string name="NekogramBeta" translatable="false">Nekogram Beta</string>
+    <string name="AppNameFluffy" translatable="false">@string/fluffyGram</string>
+    <string name="fluffyGram" translatable="false">fluffyGram</string>
+    <string name="fluffyGramBeta" translatable="false">fluffyGram Beta</string>
     <string name="NekoSettings">Neko Settings</string>
     <string name="PreferIPv6">Prefer connecting through IPv6</string>
     <string name="MessageMenu">Message menu</string>
@@ -318,7 +318,33 @@
     <string name="shouldNotTrustMeAbout">Allow resend from secret chat</string>
 
     <string name="centerTitle">Center title</string>
+    <string name="removeCountStories">Show Stories Count</string>
 
+    <string name="AboutFork">About This Fork</string>
+
+    <string name="ChangeTitleName">ChangeTitleName</string>
+
+    <string name="fluffySettingsTitle">Set title in Action Bar</string>
+    <string name="fluffySettingsTitleAbout">Select string in action bar</string>
+
+    <string name="fluffyTitleFluffyGram">fluffyGram</string>
+    <string name="fluffyTitleFluffy">fluffy</string>
+    <string name="fluffyTitleTelegram">telegram</string>
+    <string name="fluffyTitleUsername">my username</string>
+
+    <string name="fluffyLocalPremium">Local premium function</string>
+
+    <string name="fluffyGhost">Ghost Busters</string>
+    <string name="fluffyStoriesDontMarkAsViewed">Stories Mark As Viewed</string>
+
+    <string name="fluffySendReadPackets">Send read status</string>
+    <string name="fluffySendOnlinePackets">Send online status</string>
+    <string name="fluffySendUploadProgress">Send typing &amp; upload status</string>
+    <string name="fluffySendOfflinePacketAfterOnline">Immediate offline after online</string>
+    <string name="fluffyMarkReadAfterSend">Send read status after reply</string>
+
+    <string name="fluffyuseSolarIcons">Use Solar Icon</string>
+    <string name="ReloadMessage">Reload Message</string>
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>
     <string name="AccSeekbarHeading">Seekbar settings</string>

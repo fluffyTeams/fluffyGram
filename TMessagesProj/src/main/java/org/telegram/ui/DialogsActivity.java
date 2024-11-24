@@ -3313,11 +3313,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             } else {
                 statusDrawable = new AnimatedEmojiDrawable.SwapAnimatedEmojiDrawable(null, dp(26));
                 statusDrawable.center = true;
-                if (BuildVars.DEBUG_VERSION) {
-                    actionBar.setTitle(actionBarDefaultTitle = LocaleController.getString(R.string.AppNameBeta), statusDrawable);
-                } else {
-                    actionBar.setTitle(actionBarDefaultTitle = LocaleController.getString(R.string.AppName), statusDrawable);
-                }
+                actionBar.setTitle(NekoConfig.getTitleHeader(), statusDrawable);
                 updateStatus(UserConfig.getInstance(currentAccount).getCurrentUser(), false);
             }
             if (folderId == 0) {
@@ -3629,6 +3625,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
 
                 private int lastTitleType = NekoConfig.tabsTitleType;
                 private int selectedTabId = -1;
+
 
                 @Override
                 public void onTabSelected(FilterTabsView.Tab tab, boolean forward, boolean animated) {

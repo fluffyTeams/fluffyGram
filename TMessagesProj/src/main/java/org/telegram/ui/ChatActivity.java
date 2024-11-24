@@ -1512,6 +1512,9 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
     
     private final static int share = 69;
 
+
+    private final static int refresh_message = 999;
+
     private final static int id_chat_compose_panel = 1000;
 
     RecyclerListView.OnItemLongClickListenerExtended onItemLongClickListener = new RecyclerListView.OnItemLongClickListenerExtended() {
@@ -3794,6 +3797,8 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                     if (button != null) {
                         button.setTextColor(getThemedColor(Theme.key_text_RedBold));
                     }
+                } else if (id == refresh_message) {
+                    getMessagesController().loadMessages(dialog_id, 0, false, 50, startLoadFromMessageId, 0, false, 0, classGuid, 3, 0, chatMode, threadMessageId, replyMaxReadId, lastLoadIndex++, isTopic);
                 }
             }
         });
@@ -3991,6 +3996,10 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
             }
             headerItem = menu.addItem(chat_menu_options, R.drawable.ic_ab_other, themeDelegate);
             headerItem.setContentDescription(LocaleController.getString(R.string.AccDescrMoreOptions));
+
+            // reload message
+            headerItem.lazilyAddSubItem(refresh_message, R.drawable.menu_browser_refresh, LocaleController.getString(R.string.ReloadMessage));
+
 
             if (currentUser != null && currentUser.self && chatMode != MODE_SAVED) {
                 savedChatsItem = headerItem.lazilyAddSubItem(view_as_topics, R.drawable.msg_topics, LocaleController.getString(R.string.SavedViewAsChats));

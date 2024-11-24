@@ -1,8 +1,10 @@
 package tw.nekomimi.nekogram;
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,9 +16,13 @@ import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.BuildConfig;
 import org.telegram.messenger.FileLog;
+import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.NotificationsService;
 import org.telegram.messenger.R;
+import org.telegram.messenger.UserConfig;
+import org.telegram.messenger.UserObject;
 import org.telegram.messenger.Utilities;
+import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.ActionBar.Theme;
 
 import java.util.ArrayList;
@@ -29,6 +35,9 @@ import app.nekogram.translator.DeepLTranslator;
 import tw.nekomimi.nekogram.helpers.AnalyticsHelper;
 import tw.nekomimi.nekogram.helpers.CloudSettingsHelper;
 import tw.nekomimi.nekogram.helpers.LensHelper;
+import tw.nekomimi.nekogram.icons.BaseIconSet;
+import tw.nekomimi.nekogram.icons.EmptyIconSet;
+import tw.nekomimi.nekogram.icons.SolarIconSet;
 import tw.nekomimi.nekogram.translator.Translator;
 import tw.nekomimi.nekogram.translator.TranslatorApps;
 
@@ -110,7 +119,8 @@ public class NekoConfig {
     public static boolean showNoQuoteForward = false;
     public static boolean showCopyPhoto = false;
     public static boolean showQrCode = true;
-
+    public static boolean storiesCountActionbar = true;
+    public static boolean storiesMarkAsViewed = true;
     public static boolean hidePhone = true;
     public static int tabletMode = TABLET_AUTO;
     public static boolean openArchiveOnPull = false;
@@ -144,19 +154,25 @@ public class NekoConfig {
     public static boolean ignoreContentRestriction = false;
     public static boolean fixLinkPreview = false;
     public static boolean showTimeHint = false;
-
+    public static boolean sendOnlinePackets = true;
+    public static boolean sendUploadProgress = true;
+    public static boolean sendReadPackets = true;
     public static boolean springAnimation = false;
-
+    public static boolean sendOfflinePacketAfterOnline = false;
+    public static boolean markReadAfterSend = false;
     public static boolean centerTitle = false;
 
+    public static boolean localPremium = false;
     public static boolean wsEnableTLS = true;
     public static String wsDomain;
 
     public static boolean residentNotification = false;
 
     public static boolean shouldNOTTrustMe = false;
-
+    public static int titleNameTag = 0;
     public static boolean isChineseUser = false;
+    public static boolean useSolarIcons = true;
+
 
     private static final SharedPreferences.OnSharedPreferenceChangeListener listener = (preferences, key) -> {
         var map = new HashMap<String, String>(1);
@@ -257,6 +273,18 @@ public class NekoConfig {
             ignoreContentRestriction = preferences.getBoolean("ignoreContentRestriction", false);
             fixLinkPreview = preferences.getBoolean("fixLinkPreview", false);
             externalTranslationProvider = preferences.getString("externalTranslationProvider", "");
+            storiesCountActionbar = preferences.getBoolean("storiesCountActionbar", true);
+            titleNameTag = preferences.getInt("titleNameTag", 1);
+            storiesMarkAsViewed = preferences.getBoolean("storiesMarkAsViewed", true);
+
+            sendOnlinePackets = preferences.getBoolean("sendOnlinePackets", true);
+            sendUploadProgress = preferences.getBoolean("sendUploadProgress", true);
+            sendReadPackets = preferences.getBoolean("sendReadPackets", true);
+            sendOfflinePacketAfterOnline = preferences.getBoolean("sendOfflinePacketAfterOnline", true);
+            markReadAfterSend = preferences.getBoolean("markReadAfterSend", false);
+            useSolarIcons = preferences.getBoolean("useSolarIcons", true);
+
+            localPremium = preferences.getBoolean("localPremium", false);
             TranslatorApps.loadTranslatorAppsAsync();
             showTimeHint = preferences.getBoolean("showTimeHint", false);
             transcribeProvider = preferences.getInt("transcribeProvider", TRANSCRIBE_PREMIUM);
@@ -491,6 +519,13 @@ public class NekoConfig {
         editor.apply();
     }
 
+    public static void toggleCountStoriesInActionbar() {
+        storiesCountActionbar = !storiesCountActionbar;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("storiesCountActionbar", storiesCountActionbar);
+        editor.apply();
+    }
     public static void toggleSendLargePhotos() {
         sendLargePhotos = !sendLargePhotos;
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
@@ -667,6 +702,14 @@ public class NekoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt("eventType", eventType);
+        editor.apply();
+    }
+
+    public static void setNamingString(int type) {
+        titleNameTag = type;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("titleNameTag", titleNameTag);
         editor.apply();
     }
 
@@ -966,6 +1009,58 @@ public class NekoConfig {
         editor.apply();
     }
 
+    public static void toggleStoriesMarkAsView() {
+        storiesMarkAsViewed = !storiesMarkAsViewed;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("storiesMarkAsViewed", storiesMarkAsViewed);
+        editor.apply();
+    }
+    public static void toggleSendReadPackets() {
+        sendReadPackets = !sendReadPackets;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("sendReadPackets", sendReadPackets);
+        editor.apply();
+    }
+    public static void toggleSendOnlinePackets() {
+        sendOnlinePackets = !sendOnlinePackets;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("sendOnlinePackets", sendOnlinePackets);
+        editor.apply();
+    }
+    public static void toggleSendOfflinePacketAfterOnline() {
+        sendOfflinePacketAfterOnline = !sendOfflinePacketAfterOnline;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("sendOfflinePacketAfterOnline", sendOfflinePacketAfterOnline);
+        editor.apply();
+    }
+    public static void toggleMarkReadAfterSend() {
+        markReadAfterSend = !markReadAfterSend;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("markReadAfterSend", markReadAfterSend);
+        editor.apply();
+    }
+    public static void toggleSendUploadProgress() {
+        sendUploadProgress = !sendUploadProgress;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("sendUploadProgress", sendUploadProgress);
+        editor.apply();
+    }
+    public static void toggleUseSolarIcons() {
+        useSolarIcons = !useSolarIcons;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("useSolarIcons", useSolarIcons);
+        editor.apply();
+    }
+
+
+
     public static void processBotEvents(String eventType, String eventData, Utilities.Callback<JSONObject> setConfig) throws JSONException {
         if (eventType.equals("neko_get_config")) {
             setConfig.run(new JSONObject()
@@ -1001,5 +1096,39 @@ public class NekoConfig {
         } else {
             return 0xff11acfa;
         }
+    }
+    public static String getNickname() {
+        String title;
+
+        TLRPC.User user = UserConfig.getInstance(UserConfig.selectedAccount).getCurrentUser();
+        if (!TextUtils.isEmpty(UserObject.getPublicUsername(user))) {
+            title = UserObject.getPublicUsername(user);
+        } else {
+            title = UserObject.getFirstName(user);
+        }
+
+        return title;
+    }
+
+    public static CharSequence getTitleHeader() {
+        return switch (titleNameTag) {
+            case 0 -> LocaleController.getString(R.string.fluffyTitleFluffy);
+            case 1 -> LocaleController.getString(R.string.fluffyTitleFluffyGram);
+            case 2 -> LocaleController.getString(R.string.fluffyTitleTelegram);
+            case 3 -> getNickname();
+            default -> LocaleController.getString(R.string.fluffyGram);
+        };
+    }
+
+    public static void toggleLocalPremium() {
+        localPremium = !localPremium;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("localPremium", localPremium);
+        editor.apply();
+    }
+
+    public static BaseIconSet getIconPack() {
+        return useSolarIcons ? new SolarIconSet() : new EmptyIconSet();
     }
 }

@@ -50,6 +50,7 @@ public class NekoExperimentalSettingsActivity extends BaseNekoSettingsActivity {
     private int sendBugReportRow;
     private int deleteDataRow;
     private int copyReportIdRow;
+    private int localPremiumRow;
     private int data2Row;
 
     private int deleteAccountRow;
@@ -152,6 +153,11 @@ public class NekoExperimentalSettingsActivity extends BaseNekoSettingsActivity {
             NekoConfig.toggleMapDriftingFix();
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NekoConfig.mapDriftingFix);
+            }
+        } else if (position == localPremiumRow) {
+            NekoConfig.toggleLocalPremium();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.localPremium);
             }
         } else if (position == showRPCErrorRow) {
             NekoConfig.toggleShowRPCError();
@@ -259,6 +265,7 @@ public class NekoExperimentalSettingsActivity extends BaseNekoSettingsActivity {
         contentRestrictionRow = showContentRestrictionRow ? addRow("contentRestriction") : -1;
         sendLargePhotosRow = addRow("sendLargePhotosRow");
         showRPCErrorRow = addRow("showRPCError");
+        localPremiumRow = addRow("localPremiumRow");
         experiment2Row = addRow();
 
         if (AnalyticsHelper.isSettingsAvailable()) {
@@ -320,6 +327,8 @@ public class NekoExperimentalSettingsActivity extends BaseNekoSettingsActivity {
                         textCell.setTextAndCheck(LocaleController.getString(R.string.MapDriftingFix), NekoConfig.mapDriftingFix, divider);
                     } else if (position == showRPCErrorRow) {
                         textCell.setTextAndValueAndCheck(LocaleController.getString(R.string.ShowRPCError), LocaleController.formatString(R.string.ShowRPCErrorException, "FILE_REFERENCE_EXPIRED"), NekoConfig.showRPCError, true, divider);
+                    } else if (position == localPremiumRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.fluffyLocalPremium), NekoConfig.localPremium, divider);
                     } else if (position == sendBugReportRow) {
                         textCell.setEnabled(!AnalyticsHelper.analyticsDisabled, null);
                         textCell.setTextAndValueAndCheck(LocaleController.getString(R.string.SendBugReport), LocaleController.getString(R.string.SendBugReportDesc), !AnalyticsHelper.analyticsDisabled && AnalyticsHelper.sendBugReport, true, divider);
@@ -380,7 +389,7 @@ public class NekoExperimentalSettingsActivity extends BaseNekoSettingsActivity {
                 return TYPE_SHADOW;
             } else if (position == deleteAccountRow || position == downloadSpeedBoostRow || position == springAnimationRow) {
                 return TYPE_SETTINGS;
-            } else if (position > experimentRow && position <= showRPCErrorRow || position == sendBugReportRow) {
+            } else if (position > experimentRow && position <= showRPCErrorRow || position == sendBugReportRow || position == localPremiumRow) {
                 return TYPE_CHECK;
             } else if (position == experimentRow || position == dataRow) {
                 return TYPE_HEADER;

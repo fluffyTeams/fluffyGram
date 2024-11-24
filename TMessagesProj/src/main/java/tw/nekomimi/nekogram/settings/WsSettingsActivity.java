@@ -48,7 +48,7 @@ public class WsSettingsActivity extends BaseNekoSettingsActivity {
             showRestartBulletin();
         } else if (position == providerRow) {
             ArrayList<String> arrayList = new ArrayList<>();
-            arrayList.add(LocaleController.getString(R.string.Nekogram));
+            arrayList.add(LocaleController.getString(R.string.fluffyGram));
             arrayList.add(LocaleController.getString(R.string.AutoDownloadCustom));
             PopupHelper.show(arrayList, LocaleController.getString(R.string.WsProvider), TextUtils.isEmpty(NekoConfig.wsDomain) ? 0 : 1, getParentActivity(), view, i -> {
                 if (i == 0) {
@@ -148,7 +148,7 @@ public class WsSettingsActivity extends BaseNekoSettingsActivity {
                     if (position == providerRow) {
                         String value;
                         if (TextUtils.isEmpty(NekoConfig.wsDomain)) {
-                            value = LocaleController.getString(R.string.Nekogram);
+                            value = LocaleController.getString(R.string.fluffyGram);
                         } else {
                             value = NekoConfig.wsDomain;
                         }

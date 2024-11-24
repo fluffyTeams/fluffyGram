@@ -36,14 +36,25 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
     private int avatarBackgroundDarkenRow;
     private int hidePhoneRow;
     private int drawer2Row;
+    private int drawer3Row;
+
+    private int ghostRow;
+    private int markStoriesAsReadRow;
+    private int sendReadPacketsRow;
+    private int sendOnlinePacketsRow;
+    private int sendUploadProgressRow;
+    private int sendOfflinePacketAfterOnlineRow;
+    private int markReadAfterSendRow;
 
     private int appearanceRow;
     private int emojiSetsRow;
+    private int solarIconRow;
     private int mediaPreviewRow;
     private int appBarShadowRow;
     private int formatTimeWithSecondsRow;
     private int disableNumberRoundingRow;
     private int centerTitleRow;
+    private int removeCountStoriesRow;
     private int tabletModeRow;
 
 
@@ -51,6 +62,7 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
     private int appearance2Row;
 
     private int foldersRow;
+    private int titleNameRow;
     private int hideAllTabRow;
     private int tabsTitleTypeRow;
     private int folders2Row;
@@ -100,6 +112,17 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
             }
         } else if (position == emojiSetsRow) {
             presentFragment(new NekoEmojiSettingsActivity());
+        } else if (position == titleNameRow) {
+            ArrayList<String> arrayList = new ArrayList<>();
+            arrayList.add(LocaleController.getString(R.string.fluffyTitleFluffy));
+            arrayList.add(LocaleController.getString(R.string.fluffyTitleFluffyGram));
+            arrayList.add(LocaleController.getString(R.string.fluffyTitleTelegram));
+            arrayList.add(LocaleController.getString(R.string.fluffyTitleUsername));
+            PopupHelper.show(arrayList, LocaleController.getString(R.string.fluffySettingsTitle), NekoConfig.titleNameTag, getParentActivity(), view, i -> {
+                NekoConfig.setNamingString(i);
+                listAdapter.notifyItemChanged(titleNameRow, PARTIAL);
+                getNotificationCenter().postNotificationName(NotificationCenter.currentUserPremiumStatusChanged);
+                }, resourcesProvider);
         } else if (position == eventTypeRow) {
             ArrayList<String> arrayList = new ArrayList<>();
             arrayList.add(LocaleController.getString(R.string.DependsOnDate));
@@ -152,11 +175,22 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
             }
             parentLayout.setHeaderShadow(NekoConfig.disableAppBarShadow ? null : parentLayout.getParentActivity().getDrawable(R.drawable.header_shadow).mutate());
             parentLayout.rebuildAllFragmentViews(false, false);
+        } else if (position == markStoriesAsReadRow) {
+            NekoConfig.toggleStoriesMarkAsView();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.storiesMarkAsViewed);
+            }
         } else if (position == mediaPreviewRow) {
             NekoConfig.toggleMediaPreview();
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NekoConfig.mediaPreview);
             }
+        }else if (position == removeCountStoriesRow) {
+            NekoConfig.toggleCountStoriesInActionbar();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.storiesCountActionbar);
+            }
+            getNotificationCenter().postNotificationName(NotificationCenter.storiesEnabledUpdate);
         } else if (position == formatTimeWithSecondsRow) {
             NekoConfig.toggleFormatTimeWithSeconds();
             if (view instanceof TextCheckCell) {
@@ -184,6 +218,36 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
                 listAdapter.notifyItemChanged(tabsTitleTypeRow, PARTIAL);
                 getNotificationCenter().postNotificationName(NotificationCenter.dialogFiltersUpdated);
             }, resourcesProvider);
+        } else if (position == sendReadPacketsRow) {
+            NekoConfig.toggleSendReadPackets();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.sendReadPackets);
+            }
+        } else if (position == sendOnlinePacketsRow) {
+            NekoConfig.toggleSendOnlinePackets();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.sendOnlinePackets);
+            }
+        } else if (position == sendUploadProgressRow) {
+            NekoConfig.toggleSendUploadProgress();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.sendUploadProgress);
+            }
+        } else if (position == sendOfflinePacketAfterOnlineRow) {
+            NekoConfig.toggleSendOfflinePacketAfterOnline();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.sendOfflinePacketAfterOnline);
+            }
+        } else if (position == markReadAfterSendRow) {
+            NekoConfig.toggleMarkReadAfterSend();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.markReadAfterSend);
+            }
+        } else if (position == solarIconRow) {
+            NekoConfig.toggleUseSolarIcons();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.useSolarIcons);
+            }
         }
     }
 
@@ -218,14 +282,26 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
         hidePhoneRow = addRow("hidePhone");
         drawer2Row = addRow();
 
+        ghostRow = addRow("ghostRow");
+        markStoriesAsReadRow = addRow("markStoriesAsReadRow");
+        sendReadPacketsRow = addRow("sendReadPacketsRow");
+        sendOnlinePacketsRow = addRow("sendOnlinePacketsRow");
+        sendUploadProgressRow = addRow("sendUploadProgressRow");
+        sendOfflinePacketAfterOnlineRow = addRow("sendOfflinePacketAfterOnlineRow");
+        markReadAfterSendRow = addRow("markReadAfterSendRow");
+        drawer3Row = addRow();
+
         appearanceRow = addRow("appearance");
         emojiSetsRow = addRow("emojiSets");
+        solarIconRow = addRow("solarIconRow");
         mediaPreviewRow = addRow("mediaPreview");
         appBarShadowRow = addRow("appBarShadow");
         formatTimeWithSecondsRow = addRow("formatTimeWithSeconds");
         disableNumberRoundingRow = addRow("disableNumberRounding");
         centerTitleRow = addRow("centerTitleRow");
+        removeCountStoriesRow = addRow("removeCountStories");
         eventTypeRow = addRow("eventType");
+        titleNameRow = addRow("titleNameRow");
         tabletModeRow = addRow("tabletMode");
         appearance2Row = addRow();
 
@@ -261,6 +337,15 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
                             default -> LocaleController.getString(R.string.DependsOnDate);
                         };
                         textCell.setTextAndValue(LocaleController.getString(R.string.EventType), value, partial, divider);
+                    } else if (position == titleNameRow) {
+                        String value = switch (NekoConfig.titleNameTag) {
+                            case 0 -> LocaleController.getString(R.string.fluffyTitleFluffy);
+                            case 1 -> LocaleController.getString(R.string.fluffyTitleFluffyGram);
+                            case 2 -> LocaleController.getString(R.string.fluffyTitleTelegram);
+                            case 3 -> LocaleController.getString(R.string.fluffyTitleUsername);
+                            default -> "None";
+                        };
+                        textCell.setTextAndValue(LocaleController.getString(R.string.ChangeTitleName), value, partial, divider);
                     } else if (position == tabsTitleTypeRow) {
                         String value = switch (NekoConfig.tabsTitleType) {
                             case NekoConfig.TITLE_TYPE_TEXT ->
@@ -305,6 +390,22 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
                         textCell.setTextAndCheck(LocaleController.getString(R.string.HideAllTab), NekoConfig.hideAllTab, divider);
                     } else if (position == centerTitleRow) {
                         textCell.setTextAndCheck(LocaleController.getString(R.string.centerTitle), NekoConfig.centerTitle, divider);
+                    } else if (position == removeCountStoriesRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.removeCountStories), NekoConfig.storiesCountActionbar, divider);
+                    } else if (position == markStoriesAsReadRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.fluffyStoriesDontMarkAsViewed), NekoConfig.storiesMarkAsViewed, divider);
+                    } else if (position == sendOnlinePacketsRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.fluffySendOnlinePackets), NekoConfig.sendOnlinePackets, divider);
+                    } else if (position == sendUploadProgressRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.fluffySendUploadProgress), NekoConfig.sendUploadProgress, divider);
+                    } else if (position == sendOfflinePacketAfterOnlineRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.fluffySendOfflinePacketAfterOnline), NekoConfig.sendOfflinePacketAfterOnline, divider);
+                    } else if (position == sendReadPacketsRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.fluffySendReadPackets), NekoConfig.sendReadPackets, divider);
+                    } else if (position == markReadAfterSendRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.fluffyMarkReadAfterSend), NekoConfig.markReadAfterSend, divider);
+                    } else if (position == solarIconRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.fluffyuseSolarIcons), NekoConfig.useSolarIcons, divider);
                     }
                     break;
                 }
@@ -314,6 +415,8 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
                         headerCell.setText(LocaleController.getString(R.string.ChangeChannelNameColor2));
                     } else if (position == foldersRow) {
                         headerCell.setText(LocaleController.getString(R.string.Filters));
+                    } else if (position == ghostRow) {
+                        headerCell.setText(LocaleController.getString(R.string.fluffyGhost));
                     }
                     break;
                 }
@@ -350,15 +453,18 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
 
         @Override
         public int getItemViewType(int position) {
-            if (position == appearance2Row || position == drawer2Row) {
+            if (position == ghostRow) {
+                return TYPE_HEADER;
+            } else if (position == appearance2Row || position == drawer2Row || position == drawer3Row) {
                 return TYPE_SHADOW;
-            } else if (position == eventTypeRow || position == tabsTitleTypeRow || position == tabletModeRow) {
+            } else if (position == eventTypeRow || position == tabsTitleTypeRow || position == tabletModeRow || position == titleNameRow) {
                 return TYPE_SETTINGS;
             } else if (position == hideAllTabRow ||
                     (position > emojiSetsRow && position <= disableNumberRoundingRow) ||
-                    (position > drawerRow && position < drawer2Row) || position == centerTitleRow) {
+                    (position > drawerRow && position < drawer2Row) || (position > drawer2Row && position < drawer3Row) || position == centerTitleRow || position ==
+                    removeCountStoriesRow || position == markStoriesAsReadRow) {
                 return TYPE_CHECK;
-            } else if (position == appearanceRow || position == foldersRow) {
+            } else if (position == appearanceRow || position == foldersRow ) {
                 return TYPE_HEADER;
             } else if (position == folders2Row) {
                 return TYPE_INFO_PRIVACY;
