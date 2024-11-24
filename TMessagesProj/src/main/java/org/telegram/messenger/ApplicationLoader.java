@@ -635,7 +635,7 @@ public class ApplicationLoader extends Application {
     }
 
     public void onResume() {
-
+        NekoConfig.checkTheme();
     }
 
     public boolean onPause() {
