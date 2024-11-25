@@ -398,6 +398,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
     private RecyclerListView.OnItemClickListener mentionsOnItemClickListener;
     private SuggestEmojiView suggestEmojiPanel;
     private ActionBarMenuItem.Item muteItem;
+    private ActionBarMenuItem.Item wallpaperItem;
     private ActionBarMenuItem.Item muteItemGap;
     private ChatNotificationsPopupWrapper chatNotificationsPopupWrapper;
     private float pagedownButtonEnterProgress;
@@ -1518,7 +1519,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
     
     private final static int share = 69;
 
-
+    private final static int wallpaperShower = 998;
     private final static int refresh_message = 999;
 
     private final static int id_chat_compose_panel = 1000;
@@ -3812,6 +3813,10 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                     }
                 } else if (id == refresh_message) {
                     getMessagesController().loadMessages(dialog_id, 0, false, 50, startLoadFromMessageId, 0, false, 0, classGuid, 3, 0, chatMode, threadMessageId, replyMaxReadId, lastLoadIndex++, isTopic);
+                } else if (id == wallpaperShower) {
+                    NekoConfig.toggleIdInWallpaperChat(currentUser.id);
+                    wallpaperItem.setText(NekoConfig.ShowWallpaperChat(currentUser.id) ? LocaleController.getString(R.string.DontShowWallpaperInChat) : LocaleController.getString(R.string.ShowWallpaperInChat));
+                    wallpaperItem.setIcon(NekoConfig.ShowWallpaperChat(currentUser.id) ? R.drawable.msg_stories_stealth : R.drawable.msg_stories_views);
                 }
             }
         });
@@ -3966,24 +3971,24 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
             searchItemVisible = false;
         }
 
-        if (chatMode == 0 && (threadMessageId == 0 || isTopic) && !UserObject.isReplyUser(currentUser) && !isReport()) {
-            TLRPC.UserFull userFull = null;
-            if (currentUser != null) {
-                audioCallIconItem = menu.lazilyAddItem(call, R.drawable.ic_call, themeDelegate);
-                audioCallIconItem.setContentDescription(LocaleController.getString(R.string.Call));
-                userFull = getMessagesController().getUserFull(currentUser.id);
-                if (userFull != null && userFull.phone_calls_available) {
-                    showAudioCallAsIcon = !inPreviewMode;
-                    audioCallIconItem.setVisibility(View.VISIBLE);
-                } else {
-                    showAudioCallAsIcon = false;
-                    audioCallIconItem.setVisibility(View.GONE);
-                }
-                if (avatarContainer != null) {
-                    avatarContainer.setTitleExpand(showAudioCallAsIcon);
-                }
-            }
-        }
+//        if (chatMode == 0 && (threadMessageId == 0 || isTopic) && !UserObject.isReplyUser(currentUser) && !isReport()) {
+//            TLRPC.UserFull userFull = null;
+//            if (currentUser != null) {
+//                audioCallIconItem = menu.lazilyAddItem(call, R.drawable.ic_call, themeDelegate);
+//                audioCallIconItem.setContentDescription(LocaleController.getString(R.string.Call));
+//                userFull = getMessagesController().getUserFull(currentUser.id);
+//                if (userFull != null && userFull.phone_calls_available) {
+//                    showAudioCallAsIcon = !inPreviewMode;
+//                    audioCallIconItem.setVisibility(View.VISIBLE);
+//                } else {
+//                    showAudioCallAsIcon = false;
+//                    audioCallIconItem.setVisibility(View.GONE);
+//                }
+//                if (avatarContainer != null) {
+//                    avatarContainer.setTitleExpand(showAudioCallAsIcon);
+//                }
+//            }
+//        }
 
         editTextItem = menu.lazilyAddItem(chat_menu_edit_text_options, R.drawable.ic_ab_other, themeDelegate);
         editTextItem.setContentDescription(LocaleController.getString(R.string.AccDescrMoreOptions));
@@ -4008,6 +4013,10 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                 savedChatsItem.setVisibility(getMessagesController().getSavedMessagesController().hasDialogs() ? View.VISIBLE : View.GONE);
                 savedChatsGap.setVisibility(getMessagesController().getSavedMessagesController().hasDialogs() ? View.VISIBLE : View.GONE);
             } else if (chatMode != MODE_SAVED && (currentUser == null || !currentUser.self)) {
+                System.out.println(NekoConfig.ShowWallpaperChat(currentUser.id));
+
+//                wallpaperItem = headerItem.lazilyAddSubItem(wallpaperShower, NekoConfig.ShowWallpaperChat(currentUser.id) ? R.drawable.msg_stories_stealth : R.drawable.msg_stories_views, NekoConfig.ShowWallpaperChat(currentUser.id) ? LocaleController.getString(R.string.DontShowWallpaperInChat) : LocaleController.getString(R.string.ShowWallpaperInChat));
+
                 chatNotificationsPopupWrapper = new ChatNotificationsPopupWrapper(context, currentAccount, headerItem.getPopupLayout().getSwipeBack(), false, false, new ChatNotificationsPopupWrapper.Callback() {
                     @Override
                     public void dismiss() {
@@ -39567,7 +39576,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                 themeDelegate.setCurrentTheme(result, themeDelegate.wallpaper,openAnimationStartTime != 0, null);
             });
         }
-        TLRPC.WallPaper wallPaper = chatThemeController.getDialogWallpaper(dialog_id);
+        TLRPC.WallPaper wallPaper = NekoConfig.ShowWallpaperChat(currentUser.id) ? chatThemeController.getDialogWallpaper(dialog_id) : null;
         themeDelegate.setCurrentTheme(themeDelegate.chatTheme, wallPaper, openAnimationStartTime != 0, null);
     }
 

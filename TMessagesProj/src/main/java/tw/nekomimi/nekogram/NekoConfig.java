@@ -27,8 +27,10 @@ import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.ActionBar.Theme;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
@@ -175,6 +177,7 @@ public class NekoConfig {
     public static boolean useSolarIcons = true;
 
     public static boolean useOneUIswitch = true;
+
 
     public static boolean dontPlayVideoOnVolume = false;
 
@@ -1196,4 +1199,43 @@ public class NekoConfig {
     public static BaseIconSet getIconPack() {
         return useSolarIcons ? new SolarIconSet() : new EmptyIconSet();
     }
+
+
+    public static void toggleIdInWallpaperChat(long id) {
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        String idHideWallpaper = preferences.getString("idHideWallpaper", "");
+        List<String> ids = parseIds(idHideWallpaper);
+
+        String idString = String.valueOf(id);
+
+        if (ids.contains(idString)) {
+            ids.remove(idString);
+        } else {
+            ids.add(idString);
+        }
+
+        String updatedIds = String.join(";", ids);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("idHideWallpaper", updatedIds);
+        editor.apply();
+    }
+
+    public static boolean ShowWallpaperChat(long id) {
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        String idHideWallpaper = preferences.getString("idHideWallpaper", "");
+        List<String> ids = parseIds(idHideWallpaper);
+
+        if (ids.isEmpty()) {
+            return true;
+        }
+
+        return !ids.contains(String.valueOf(id));
+    }
+    public static List<String> parseIds(String input) {
+        if (input == null || input.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return new ArrayList<>(Arrays.asList(input.split(";")));
+    }
+
 }

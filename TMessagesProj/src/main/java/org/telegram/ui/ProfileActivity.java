@@ -407,6 +407,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private ActionBarMenuSubItem editColorItem;
     private ActionBarMenuSubItem linkItem;
     private ActionBarMenuSubItem setUsernameItem;
+    private ActionBarMenuSubItem wallpaperItem;
+
     private ImageView ttlIconView;
     private ActionBarMenuItem qrItem;
     private ActionBarMenuSubItem autoDeleteItem;
@@ -543,6 +545,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private final static int copy_link_profile = 42;
     private final static int set_username = 43;
     private final static int bot_privacy = 44;
+
+    private final static int wallpaper_show = 99;
 
     private Rect rect = new Rect();
 
@@ -2241,6 +2245,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     Bundle args = new Bundle();
                     args.putLong("user_id", userId);
                     presentFragment(new ContactAddActivity(args, resourcesProvider));
+                } else if (id == wallpaper_show) {
+                    NekoConfig.toggleIdInWallpaperChat(userId);
+                    wallpaperItem.setText(NekoConfig.ShowWallpaperChat(userId) ? LocaleController.getString(R.string.DontShowWallpaperInChat) : LocaleController.getString(R.string.ShowWallpaperInChat));
+                    wallpaperItem.setIcon(NekoConfig.ShowWallpaperChat(userId) ? R.drawable.msg_stories_stealth : R.drawable.msg_stories_views);
                 } else if (id == delete_contact) {
                     final TLRPC.User user = getMessagesController().getUser(userId);
                     if (user == null || getParentActivity() == null) {
@@ -10151,6 +10159,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     otherItem.addSubItem(block_contact, !userBlocked ? R.drawable.msg_block : R.drawable.msg_block, !userBlocked ? LocaleController.getString(R.string.BlockContact) : LocaleController.getString(R.string.Unblock));
                     otherItem.addSubItem(edit_contact, R.drawable.msg_edit, LocaleController.getString(R.string.EditContact));
                     otherItem.addSubItem(delete_contact, R.drawable.msg_delete, LocaleController.getString(R.string.DeleteContact));
+                    wallpaperItem = otherItem.addSubItem(wallpaper_show, NekoConfig.ShowWallpaperChat(user.id) ? R.drawable.msg_stories_stealth : R.drawable.msg_stories_views, NekoConfig.ShowWallpaperChat(user.id) ? LocaleController.getString(R.string.DontShowWallpaperInChat) : LocaleController.getString(R.string.ShowWallpaperInChat));
                 }
                 if (!UserObject.isDeleted(user) && !isBot && currentEncryptedChat == null && !userBlocked && userId != 333000 && userId != 777000 && userId != 42777) {
                     if (!BuildVars.IS_BILLING_UNAVAILABLE && !user.self && !getMessagesController().premiumFeaturesBlocked()) {
