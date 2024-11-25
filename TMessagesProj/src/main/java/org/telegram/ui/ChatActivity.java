@@ -28235,6 +28235,9 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
     }
 
     public boolean maybePlayVisibleVideo() {
+        if (NekoConfig.dontPlayVideoOnVolume) {
+            return false;
+        }
         if (chatListView == null) {
             return false;
         }

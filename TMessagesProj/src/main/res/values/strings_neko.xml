@@ -344,6 +344,8 @@
     <string name="fluffyMarkReadAfterSend">Send read status after reply</string>
 
     <string name="fluffyuseSolarIcons">Use Solar Icon</string>
+    <string name="fluffydontPlayVideoOnVolume">Don\'t play video on volume</string>
+
     <string name="ReloadMessage">Reload Message</string>
     <!-- Accessibility -->
     <string name="AccessibilitySettings">Accessibility settings</string>

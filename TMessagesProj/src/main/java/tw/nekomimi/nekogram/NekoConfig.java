@@ -174,6 +174,8 @@ public class NekoConfig {
     public static boolean isChineseUser = false;
     public static boolean useSolarIcons = true;
 
+    public static boolean dontPlayVideoOnVolume = false;
+
 
     private static final SharedPreferences.OnSharedPreferenceChangeListener listener = (preferences, key) -> {
         var map = new HashMap<String, String>(1);
@@ -284,6 +286,7 @@ public class NekoConfig {
             sendOfflinePacketAfterOnline = preferences.getBoolean("sendOfflinePacketAfterOnline", true);
             markReadAfterSend = preferences.getBoolean("markReadAfterSend", false);
             useSolarIcons = preferences.getBoolean("useSolarIcons", true);
+            dontPlayVideoOnVolume = preferences.getBoolean("dontPlayVideoOnVolume", true);
 
             localPremium = preferences.getBoolean("localPremium", false);
             TranslatorApps.loadTranslatorAppsAsync();
@@ -1057,6 +1060,14 @@ public class NekoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("useSolarIcons", useSolarIcons);
+        editor.apply();
+    }
+
+    public static void toggleDontPlayVideoOnVolume() {
+        dontPlayVideoOnVolume = !dontPlayVideoOnVolume;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("dontPlayVideoOnVolume", dontPlayVideoOnVolume);
         editor.apply();
     }
 

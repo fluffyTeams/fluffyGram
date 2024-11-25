@@ -48,6 +48,9 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
 
     private int appearanceRow;
     private int emojiSetsRow;
+
+    private int dontPlayVideoOnVolumeRow;
+
     private int solarIconRow;
     private int mediaPreviewRow;
     private int appBarShadowRow;
@@ -112,6 +115,11 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
             }
         } else if (position == emojiSetsRow) {
             presentFragment(new NekoEmojiSettingsActivity());
+        } else if (position == dontPlayVideoOnVolumeRow) {
+            NekoConfig.toggleDontPlayVideoOnVolume();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.dontPlayVideoOnVolume);
+            }
         } else if (position == titleNameRow) {
             ArrayList<String> arrayList = new ArrayList<>();
             arrayList.add(LocaleController.getString(R.string.fluffyTitleFluffy));
@@ -293,6 +301,7 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
 
         appearanceRow = addRow("appearance");
         emojiSetsRow = addRow("emojiSets");
+        dontPlayVideoOnVolumeRow = addRow("dontPlayVideoOnVolumeRow");
         solarIconRow = addRow("solarIconRow");
         mediaPreviewRow = addRow("mediaPreview");
         appBarShadowRow = addRow("appBarShadow");
@@ -406,6 +415,8 @@ public class NekoAppearanceSettings extends BaseNekoSettingsActivity implements 
                         textCell.setTextAndCheck(LocaleController.getString(R.string.fluffyMarkReadAfterSend), NekoConfig.markReadAfterSend, divider);
                     } else if (position == solarIconRow) {
                         textCell.setTextAndCheck(LocaleController.getString(R.string.fluffyuseSolarIcons), NekoConfig.useSolarIcons, divider);
+                    } else if (position == dontPlayVideoOnVolumeRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.fluffydontPlayVideoOnVolume), NekoConfig.dontPlayVideoOnVolume, divider);
                     }
                     break;
                 }
