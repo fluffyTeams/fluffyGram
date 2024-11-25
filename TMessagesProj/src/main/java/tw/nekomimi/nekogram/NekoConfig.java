@@ -286,7 +286,7 @@ public class NekoConfig {
             sendOfflinePacketAfterOnline = preferences.getBoolean("sendOfflinePacketAfterOnline", true);
             markReadAfterSend = preferences.getBoolean("markReadAfterSend", false);
             useSolarIcons = preferences.getBoolean("useSolarIcons", true);
-            dontPlayVideoOnVolume = preferences.getBoolean("dontPlayVideoOnVolume", true);
+            dontPlayVideoOnVolume = preferences.getBoolean("dontPlayVideoOnVolume", false);
 
             localPremium = preferences.getBoolean("localPremium", false);
             TranslatorApps.loadTranslatorAppsAsync();
