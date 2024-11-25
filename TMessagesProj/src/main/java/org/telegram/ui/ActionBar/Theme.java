@@ -3375,6 +3375,14 @@ public class Theme {
     private static HashMap<MessageObject, AudioVisualizerDrawable> animatedOutVisualizerDrawables;
 
     public static int colorsCount;
+    public static final int key_alwaysBlack = colorsCount++;
+    public static final int key_alwaysWhite = colorsCount++;
+    public static final int key_alwaysGray = colorsCount++;
+    public static final int key_alwaysGrayDarkTheme = colorsCount++;
+    public static final int key_cgGradient1 = colorsCount++;
+    public static final int key_cgGradient2 = colorsCount++;
+    public static Drawable chat_attachCameraButton;
+
     public static final int key_wallpaperFileOffset = colorsCount++;
     public static final int key_dialogBackground = colorsCount++;
     public static final int key_dialogBackgroundGray = colorsCount++;

@@ -174,6 +174,8 @@ public class NekoConfig {
     public static boolean isChineseUser = false;
     public static boolean useSolarIcons = true;
 
+    public static boolean useOneUIswitch = true;
+
     public static boolean dontPlayVideoOnVolume = false;
 
 
@@ -286,6 +288,7 @@ public class NekoConfig {
             sendOfflinePacketAfterOnline = preferences.getBoolean("sendOfflinePacketAfterOnline", true);
             markReadAfterSend = preferences.getBoolean("markReadAfterSend", false);
             useSolarIcons = preferences.getBoolean("useSolarIcons", true);
+            useOneUIswitch = preferences.getBoolean("useOneUIswitch", true);
             dontPlayVideoOnVolume = preferences.getBoolean("dontPlayVideoOnVolume", false);
 
             localPremium = preferences.getBoolean("localPremium", false);
@@ -1060,6 +1063,14 @@ public class NekoConfig {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("useSolarIcons", useSolarIcons);
+        editor.apply();
+    }
+
+    public static void toggleOneUiSwitcher() {
+        useOneUIswitch = !useOneUIswitch;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("useOneUIswitch", useOneUIswitch);
         editor.apply();
     }
 
