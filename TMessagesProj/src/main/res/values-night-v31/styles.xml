@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.TMessages.Start" parent="Theme.AppCompat.Light">
-        <item name="android:windowSplashScreenBackground">@android:color/system_accent1_900</item>
+        <item name="android:windowSplashScreenBackground">@android:color/system_accent1_700</item>
         <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher_animated</item>
         <item name="android:windowSplashScreenAnimationDuration">@integer/splash_screen_duration</item>
     </style>
