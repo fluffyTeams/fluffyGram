@@ -36870,9 +36870,10 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
             } else {
                 BottomSheet.Builder builder = new BottomSheet.Builder(getParentActivity(), false, themeDelegate);
                 builder.setTitle(button.text);
+
                 builder.setItems(new CharSequence[]{
                         LocaleController.getString(R.string.Copy),
-                        button.data != null ? LocaleController.getString(R.string.CopyCallback) : null,
+                        button.data != null ? "Copy " + getMessageHelper().getTextOrBase64(button.data) : null,
                         button.query != null ? LocaleController.getString(R.string.CopyInlineQuery) : null,
                         button.user_id != 0 ? LocaleController.getString(R.string.CopyID) : null}, (dialog, which) -> {
                     if (which == 0) {
