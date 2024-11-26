@@ -4013,7 +4013,6 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                 savedChatsItem.setVisibility(getMessagesController().getSavedMessagesController().hasDialogs() ? View.VISIBLE : View.GONE);
                 savedChatsGap.setVisibility(getMessagesController().getSavedMessagesController().hasDialogs() ? View.VISIBLE : View.GONE);
             } else if (chatMode != MODE_SAVED && (currentUser == null || !currentUser.self)) {
-                System.out.println(NekoConfig.ShowWallpaperChat(currentUser.id));
 
 //                wallpaperItem = headerItem.lazilyAddSubItem(wallpaperShower, NekoConfig.ShowWallpaperChat(currentUser.id) ? R.drawable.msg_stories_stealth : R.drawable.msg_stories_views, NekoConfig.ShowWallpaperChat(currentUser.id) ? LocaleController.getString(R.string.DontShowWallpaperInChat) : LocaleController.getString(R.string.ShowWallpaperInChat));
 
@@ -39576,7 +39575,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                 themeDelegate.setCurrentTheme(result, themeDelegate.wallpaper,openAnimationStartTime != 0, null);
             });
         }
-        TLRPC.WallPaper wallPaper = NekoConfig.ShowWallpaperChat(currentUser.id) ? chatThemeController.getDialogWallpaper(dialog_id) : null;
+        TLRPC.WallPaper wallPaper = NekoConfig.ShowWallpaperChat(dialog_id) ? chatThemeController.getDialogWallpaper(dialog_id) : null;
         themeDelegate.setCurrentTheme(themeDelegate.chatTheme, wallPaper, openAnimationStartTime != 0, null);
     }
 
