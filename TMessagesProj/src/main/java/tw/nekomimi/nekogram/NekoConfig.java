@@ -178,7 +178,6 @@ public class NekoConfig {
 
     public static boolean useOneUIswitch = true;
 
-
     public static boolean dontPlayVideoOnVolume = false;
 
 
