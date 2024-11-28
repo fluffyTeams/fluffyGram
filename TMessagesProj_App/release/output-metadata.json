@@ -4,42 +4,16 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "tw.nekomimi.nekogram",
+  "applicationId": "org.ushastoe.fluffyGram",
   "variantName": "release",
   "elements": [
     {
       "type": "UNIVERSAL",
       "filters": [],
       "attributes": [],
-      "versionCode": 52440,
-      "versionName": "11.1.3",
-      "outputFile": "Nekogram-11.1.3-5244-universal.apk"
-    },
-    {
-      "type": "ONE_OF_MANY",
-      "filters": [
-        {
-          "filterType": "ABI",
-          "value": "arm64-v8a"
-        }
-      ],
-      "attributes": [],
-      "versionCode": 52440,
-      "versionName": "11.1.3",
-      "outputFile": "Nekogram-11.1.3-5244-arm64-v8a.apk"
-    },
-    {
-      "type": "ONE_OF_MANY",
-      "filters": [
-        {
-          "filterType": "ABI",
-          "value": "x86"
-        }
-      ],
-      "attributes": [],
-      "versionCode": 52440,
-      "versionName": "11.1.3",
-      "outputFile": "Nekogram-11.1.3-5244-x86.apk"
+      "versionCode": 53350,
+      "versionName": "11.2.3",
+      "outputFile": "fluffyGram-11.2.3-5335-universal.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -50,9 +24,35 @@
         }
       ],
       "attributes": [],
-      "versionCode": 52440,
-      "versionName": "11.1.3",
-      "outputFile": "Nekogram-11.1.3-5244-armeabi-v7a.apk"
+      "versionCode": 53350,
+      "versionName": "11.2.3",
+      "outputFile": "fluffyGram-11.2.3-5335-armeabi-v7a.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "x86"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 53350,
+      "versionName": "11.2.3",
+      "outputFile": "fluffyGram-11.2.3-5335-x86.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "arm64-v8a"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 53350,
+      "versionName": "11.2.3",
+      "outputFile": "fluffyGram-11.2.3-5335-arm64-v8a.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -63,9 +63,9 @@
         }
       ],
       "attributes": [],
-      "versionCode": 52440,
-      "versionName": "11.1.3",
-      "outputFile": "Nekogram-11.1.3-5244-x86_64.apk"
+      "versionCode": 53350,
+      "versionName": "11.2.3",
+      "outputFile": "fluffyGram-11.2.3-5335-x86_64.apk"
     }
   ],
   "elementType": "File",
@@ -74,22 +74,22 @@
       "minApi": 28,
       "maxApi": 30,
       "baselineProfiles": [
-        "baselineProfiles/1/Nekogram-11.1.3-5244-universal.dm",
-        "baselineProfiles/1/Nekogram-11.1.3-5244-arm64-v8a.dm",
-        "baselineProfiles/1/Nekogram-11.1.3-5244-x86.dm",
-        "baselineProfiles/1/Nekogram-11.1.3-5244-armeabi-v7a.dm",
-        "baselineProfiles/1/Nekogram-11.1.3-5244-x86_64.dm"
+        "baselineProfiles/1/fluffyGram-11.2.3-5335-universal.dm",
+        "baselineProfiles/1/fluffyGram-11.2.3-5335-armeabi-v7a.dm",
+        "baselineProfiles/1/fluffyGram-11.2.3-5335-x86.dm",
+        "baselineProfiles/1/fluffyGram-11.2.3-5335-arm64-v8a.dm",
+        "baselineProfiles/1/fluffyGram-11.2.3-5335-x86_64.dm"
       ]
     },
     {
       "minApi": 31,
       "maxApi": 2147483647,
       "baselineProfiles": [
-        "baselineProfiles/0/Nekogram-11.1.3-5244-universal.dm",
-        "baselineProfiles/0/Nekogram-11.1.3-5244-arm64-v8a.dm",
-        "baselineProfiles/0/Nekogram-11.1.3-5244-x86.dm",
-        "baselineProfiles/0/Nekogram-11.1.3-5244-armeabi-v7a.dm",
-        "baselineProfiles/0/Nekogram-11.1.3-5244-x86_64.dm"
+        "baselineProfiles/0/fluffyGram-11.2.3-5335-universal.dm",
+        "baselineProfiles/0/fluffyGram-11.2.3-5335-armeabi-v7a.dm",
+        "baselineProfiles/0/fluffyGram-11.2.3-5335-x86.dm",
+        "baselineProfiles/0/fluffyGram-11.2.3-5335-arm64-v8a.dm",
+        "baselineProfiles/0/fluffyGram-11.2.3-5335-x86_64.dm"
       ]
     }
   ],

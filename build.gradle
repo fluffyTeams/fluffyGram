@@ -32,7 +32,7 @@ subprojects {
                 }
 
                 defaultConfig {
-                    minSdkVersion 21
+                    minSdkVersion 26
                     targetSdkVersion 34
                 }
 
