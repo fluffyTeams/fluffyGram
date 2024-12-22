@@ -87,6 +87,7 @@ public class NekoChatSettingsActivity extends BaseNekoSettingsActivity implement
     private int confirmAVRow;
     private int disableProximityEventsRow;
     private int disableVoiceMessageAutoPlayRow;
+    private int unmuteVideosWithVolumeButtonsRow;
     private int autoPauseVideoRow;
     private int preferOriginalQualityRow;
     private int media2Row;
@@ -185,6 +186,11 @@ public class NekoChatSettingsActivity extends BaseNekoSettingsActivity implement
             NekoConfig.toggleDisableVoiceMessageAutoPlay();
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NekoConfig.disableVoiceMessageAutoPlay);
+            }
+        } else if (position == unmuteVideosWithVolumeButtonsRow) {
+            NekoConfig.toggleUnmuteVideosWithVolumeButtons();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.unmuteVideosWithVolumeButtons);
             }
         } else if (position == doubleTapActionRow) {
             ArrayList<String> arrayList = new ArrayList<>();
@@ -443,6 +449,7 @@ public class NekoChatSettingsActivity extends BaseNekoSettingsActivity implement
         confirmAVRow = addRow("confirmAV");
         disableProximityEventsRow = addRow("disableProximityEvents");
         disableVoiceMessageAutoPlayRow = addRow("disableVoiceMessageAutoPlay");
+        unmuteVideosWithVolumeButtonsRow = addRow("unmuteVideosWithVolumeButtons");
         autoPauseVideoRow = addRow("autoPauseVideo");
         preferOriginalQualityRow = addRow("preferOriginalQuality");
         media2Row = addRow();
@@ -740,6 +747,8 @@ public class NekoChatSettingsActivity extends BaseNekoSettingsActivity implement
                         textCell.setTextAndCheck(LocaleController.getString(R.string.DisableGreetingSticker), NekoConfig.disableGreetingSticker, divider);
                     } else if (position == disableVoiceMessageAutoPlayRow) {
                         textCell.setTextAndCheck(LocaleController.getString(R.string.DisableVoiceMessagesAutoPlay), NekoConfig.disableVoiceMessageAutoPlay, divider);
+                    } else if (position == unmuteVideosWithVolumeButtonsRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.UnmuteVideosWithVolumeButtons), NekoConfig.unmuteVideosWithVolumeButtons, divider);
                     } else if (position == voiceEnhancementsRow) {
                         textCell.setTextAndValueAndCheck(LocaleController.getString(R.string.VoiceEnhancements), LocaleController.getString(R.string.VoiceEnhancementsAbout), NekoConfig.voiceEnhancements, true, divider);
                     } else if (position == hideTimeOnStickerRow) {
