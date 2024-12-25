@@ -54,7 +54,9 @@ public class WebAppHelper {
 
     private static void openInternalWebApp(BaseFragment fragment, String url, int type, boolean searchUser) {
         var botInfo = Extra.getHelperBot();
+
         var bot = fragment.getMessagesController().getUser(botInfo.getId());
+
         if (bot == null) {
             if (searchUser) {
                 fragment.getUserHelper().resolveUser(botInfo.getUsername(), botInfo.getId(), user -> openInternalWebApp(fragment, url, type, false));

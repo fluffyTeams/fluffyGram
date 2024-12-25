@@ -274,9 +274,14 @@ public class UserHelper extends BaseController {
     }
 
     public interface BotInfo {
-        long getId();
 
-        String getUsername();
+        default long getId() {
+            return 0L;
+        }
+
+        default String getUsername() {
+            return "";
+        }
     }
 
     abstract public static class UserInfoBot implements BotInfo {
