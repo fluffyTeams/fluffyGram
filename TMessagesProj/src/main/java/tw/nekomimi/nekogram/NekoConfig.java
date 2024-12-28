@@ -158,14 +158,11 @@ public class NekoConfig {
     public static boolean ignoreContentRestriction = false;
     public static boolean fixLinkPreview = false;
     public static boolean showTimeHint = false;
-<<<<<<< HEAD
     public static boolean sendOnlinePackets = true;
     public static boolean sendUploadProgress = true;
     public static boolean sendReadPackets = true;
-=======
     public static boolean preferOriginalQuality = false;
 
->>>>>>> caeac75b5 (Allow preferring original quality)
     public static boolean springAnimation = false;
     public static boolean sendOfflinePacketAfterOnline = false;
     public static boolean markReadAfterSend = false;
