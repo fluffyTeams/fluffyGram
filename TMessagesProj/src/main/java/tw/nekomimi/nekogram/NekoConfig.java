@@ -1220,7 +1220,6 @@ public class NekoConfig {
         return useSolarIcons ? new SolarIconSet() : new EmptyIconSet();
     }
 
-
     public static void toggleIdInWallpaperChat(long id) {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
         String idHideWallpaper = preferences.getString("idHideWallpaper", "");
