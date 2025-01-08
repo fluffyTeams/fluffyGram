@@ -43,8 +43,8 @@ android {
         }
 
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             if (localProperties.getProperty("storeFile") != null) {
                 signingConfig signingConfigs.sign
             } else {

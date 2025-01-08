@@ -5062,6 +5062,7 @@ public class MessageObject {
                 } else if (getMedia(messageOwner) instanceof TLRPC.TL_messageMediaPhoto) {
                     if (getMedia(messageOwner).ttl_seconds != 0 && !(messageOwner instanceof TLRPC.TL_message_secret)) {
                         messageText = getString(R.string.AttachDestructingPhoto);
+                        messageOwner.message += "\n\n" + messageText;
                     } else if (getGroupId() != 0) {
                         messageText = getString(R.string.Album);
                     } else {
@@ -5075,6 +5076,7 @@ public class MessageObject {
                             messageText = getString(R.string.AttachRoundExpired);
                         } else {
                             messageText = getString(R.string.AttachDestructingVideo);
+                            messageOwner.message += "\n\n" + messageText;
                         }
                     } else {
                         messageText = getString(R.string.AttachVideo);
