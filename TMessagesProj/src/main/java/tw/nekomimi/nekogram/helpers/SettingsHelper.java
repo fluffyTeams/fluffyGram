@@ -16,7 +16,6 @@ import java.util.Locale;
 import tw.nekomimi.nekogram.settings.BaseNekoSettingsActivity;
 import tw.nekomimi.nekogram.settings.NekoAppearanceSettings;
 import tw.nekomimi.nekogram.settings.NekoChatSettingsActivity;
-import tw.nekomimi.nekogram.settings.NekoDonateActivity;
 import tw.nekomimi.nekogram.settings.NekoEmojiSettingsActivity;
 import tw.nekomimi.nekogram.settings.NekoExperimentalSettingsActivity;
 import tw.nekomimi.nekogram.settings.NekoGeneralSettingsActivity;
@@ -67,10 +66,6 @@ public class SettingsHelper {
                     case "chats":
                     case "c":
                         fragment = new NekoChatSettingsActivity();
-                        break;
-                    case "donate":
-                    case "d":
-                        fragment = new NekoDonateActivity();
                         break;
                     case "experimental":
                     case "e":

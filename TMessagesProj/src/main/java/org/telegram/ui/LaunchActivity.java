@@ -9,7 +9,6 @@
 package org.telegram.ui;
 
 import static org.telegram.messenger.LocaleController.formatPluralString;
-import static org.telegram.messenger.LocaleController.getString;
 import static org.telegram.ui.Components.Premium.LimitReachedBottomSheet.TYPE_ACCOUNTS;
 import static org.telegram.ui.Components.Premium.LimitReachedBottomSheet.TYPE_BOOSTS_FOR_USERS;
 
@@ -234,7 +233,6 @@ import tw.nekomimi.nekogram.helpers.SettingsHelper;
 import tw.nekomimi.nekogram.helpers.UserHelper;
 import tw.nekomimi.nekogram.helpers.remote.UpdateHelper;
 import tw.nekomimi.nekogram.icons.fluffyResources;
-import tw.nekomimi.nekogram.settings.NekoDonateActivity;
 import tw.nekomimi.nekogram.settings.NekoSettingsActivity;
 
 public class LaunchActivity extends BasePermissionsActivity implements INavigationLayout.INavigationLayoutDelegate, NotificationCenter.NotificationCenterDelegate, DialogsActivity.DialogsActivityDelegate {
@@ -3293,8 +3291,6 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                     fragment = new EditWidgetActivity(open_widget_edit_type, open_widget_edit);
                 } else if (open_settings == 100) {
                     fragment = new NekoSettingsActivity();
-                } else if (open_settings == 101) {
-                    fragment = new NekoDonateActivity();
                 } else if (open_settings == 10) {
                     fragment = new LanguageSelectActivity();
                 } else if (open_settings == 11) {

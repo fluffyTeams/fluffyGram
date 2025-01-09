@@ -1234,16 +1234,6 @@ public abstract class BotWebViewContainer extends FrameLayout implements Notific
         }
         d("onEventReceived " + eventType);
         switch (eventType) {
-            case "neko_get_config":
-            case "neko_set_config": {
-                if (Extra.isTrustedBot(botUser.id)) {
-                    try {
-                        NekoConfig.processBotEvents(eventType, eventData, config -> notifyEvent("neko_config", config));
-                    } catch (JSONException e) {
-                        FileLog.e(e);
-                    }
-                }
-            }
             case "web_app_allow_scroll": {
                 boolean x = true, y = true;
                 try {

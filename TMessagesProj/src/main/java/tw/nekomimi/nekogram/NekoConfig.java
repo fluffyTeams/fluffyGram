@@ -10,8 +10,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.ToNumberPolicy;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.BuildConfig;
@@ -1146,25 +1144,6 @@ public class NekoConfig {
         }
 
         NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.needSetDayNightTheme, themeInfo, false, null, -1);
-    }
-
-
-    public static void processBotEvents(String eventType, String eventData, Utilities.Callback<JSONObject> setConfig) throws JSONException {
-        if (eventType.equals("neko_get_config")) {
-            setConfig.run(new JSONObject()
-                    .put("trust", !shouldNOTTrustMe));
-        } else if (eventType.equals("neko_set_config")) {
-            JSONObject jsonObject = new JSONObject(eventData);
-            SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-            switch (jsonObject.getString("key")) {
-                case "trust":
-                    shouldNOTTrustMe = !jsonObject.getBoolean("value");
-                    editor.putBoolean("shouldNOTTrustMe", shouldNOTTrustMe);
-                    break;
-            }
-            editor.apply();
-        }
     }
 
     public static int getNotificationColor() {
