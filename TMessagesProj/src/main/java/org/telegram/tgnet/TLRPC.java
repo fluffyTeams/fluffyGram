@@ -38,8 +38,6 @@ import org.telegram.ui.Stories.MessageMediaStoryFull_old;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import tw.nekomimi.nekogram.helpers.remote.ConfigHelper;
-
 public class TLRPC {
 
     public static final int USER_FLAG_ACCESS_HASH           = 0x00000001;
@@ -49035,7 +49033,6 @@ public class TLRPC {
             if (result != null) {
                 result.readParams(stream, exception, allowStrippedThumb);
             }
-            ConfigHelper.overrideChat(result);
             return result;
         }
 
