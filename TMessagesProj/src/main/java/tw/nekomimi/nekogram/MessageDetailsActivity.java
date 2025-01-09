@@ -69,11 +69,13 @@ public class MessageDetailsActivity extends BaseNekoSettingsActivity implements 
     private FlagSecureReason flagSecure;
 
     private int idRow;
+    private int inlineRow;
     private int messageRow;
     private int captionRow;
     private int groupRow;
     private int channelRow;
     private int fromRow;
+
     private int botRow;
     private int dateRow;
     private int editedRow;

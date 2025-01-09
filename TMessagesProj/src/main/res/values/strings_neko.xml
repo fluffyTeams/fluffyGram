@@ -349,6 +349,7 @@
     <string name="fluffydontPlayVideoOnVolume">Don\'t play video on volume</string>
 
     <string name="ReloadMessage">Reload Message</string>
+    <string name="SendAsViewed">I\'m seen!</string>
 
     <string name="ShowWallpaperInChat">Show Wallpaper</string>
     <string name="DontShowWallpaperInChat">Don\'t Show Wallpaper</string>

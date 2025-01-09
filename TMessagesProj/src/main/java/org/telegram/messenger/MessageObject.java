@@ -8382,12 +8382,19 @@ public class MessageObject {
         }
         return false;
     }
-
     public static boolean isSecretMedia(TLRPC.Message message) {
+        return isSecretMedia(message, false);
+    }
+
+    public static boolean isSecretMedia(TLRPC.Message message, boolean realRequests) {
         if (message instanceof TLRPC.TL_message_secret) {
             return (getMedia(message) instanceof TLRPC.TL_messageMediaPhoto || isRoundVideoMessage(message) || isVideoMessage(message)) && getMedia(message).ttl_seconds != 0;
         } else if (message instanceof TLRPC.TL_message) {
-            return !NekoConfig.shouldNOTTrustMe && (getMedia(message) instanceof TLRPC.TL_messageMediaPhoto || getMedia(message) instanceof TLRPC.TL_messageMediaDocument) && getMedia(message).ttl_seconds != 0;
+            if (realRequests) {
+                return (getMedia(message) instanceof TLRPC.TL_messageMediaPhoto || getMedia(message) instanceof TLRPC.TL_messageMediaDocument) && getMedia(message).ttl_seconds != 0;
+            } else {
+                return !NekoConfig.shouldNOTTrustMe && (getMedia(message) instanceof TLRPC.TL_messageMediaPhoto || getMedia(message) instanceof TLRPC.TL_messageMediaDocument) && getMedia(message).ttl_seconds != 0;
+            }
         }
         return false;
     }
@@ -8408,10 +8415,18 @@ public class MessageObject {
     }
 
     public boolean isSecretMedia() {
+        return isSecretMedia(false);
+    }
+
+    public boolean isSecretMedia(boolean realRequests) {
         if (messageOwner instanceof TLRPC.TL_message_secret) {
             return (((getMedia(messageOwner) instanceof TLRPC.TL_messageMediaPhoto) || isGif()) && messageOwner.ttl > 0 && messageOwner.ttl <= 60 || isVoice() || isRoundVideo() || isVideo());
         } else if (messageOwner instanceof TLRPC.TL_message) {
-            return !NekoConfig.shouldNOTTrustMe && (getMedia(messageOwner) != null && getMedia(messageOwner).ttl_seconds != 0) && (getMedia(messageOwner) instanceof TLRPC.TL_messageMediaPhoto || getMedia(messageOwner) instanceof TLRPC.TL_messageMediaDocument);
+            if (realRequests) {
+                return (getMedia(messageOwner) != null && getMedia(messageOwner).ttl_seconds != 0) && (getMedia(messageOwner) instanceof TLRPC.TL_messageMediaPhoto || getMedia(messageOwner) instanceof TLRPC.TL_messageMediaDocument);
+            } else {
+                return !NekoConfig.shouldNOTTrustMe && (getMedia(messageOwner) != null && getMedia(messageOwner).ttl_seconds != 0) && (getMedia(messageOwner) instanceof TLRPC.TL_messageMediaPhoto || getMedia(messageOwner) instanceof TLRPC.TL_messageMediaDocument);
+            }
         }
         return false;
     }

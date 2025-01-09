@@ -77,6 +77,7 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.util.Pair;
 import android.util.Property;
 import android.util.SparseArray;
@@ -1115,6 +1116,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
     private final static int OPTION_OPEN_PROFILE = 104;
     private final static int OPTION_FACT_CHECK = 106;
     private final static int OPTION_EDIT_PRICE = 107;
+    private final static int OPTION_SEND_AS_VIEWED = 108;
 
     private final static int[] allowedNotificationsDuringChatListAnimations = new int[]{
             NotificationCenter.messagesRead,
@@ -14871,10 +14873,19 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
             chatListView.stopScroll();
         }
     }
+    private Runnable sendSecretMessageRead(MessageObject messageObject, boolean readNow){
+        return sendSecretMessageRead(messageObject, readNow, false);
+    }
 
-    private Runnable sendSecretMessageRead(MessageObject messageObject, boolean readNow) {
-        if (messageObject == null || messageObject.isOut() || !messageObject.isSecretMedia() || messageObject.messageOwner.destroyTime != 0 || messageObject.messageOwner.ttl <= 0) {
-            return null;
+    private Runnable sendSecretMessageRead(MessageObject messageObject, boolean readNow, boolean fromMenu) {
+        if (!fromMenu) {
+            if (messageObject == null || messageObject.isOut() || !messageObject.isSecretMedia() || messageObject.messageOwner.destroyTime != 0 || messageObject.messageOwner.ttl <= 0) {
+                return null;
+            }
+        } else {
+            if (messageObject == null || messageObject.isOut() || !messageObject.isSecretMedia(true) || messageObject.messageOwner.destroyTime != 0 || messageObject.messageOwner.ttl <= 0) {
+                return null;
+            }
         }
         if (readNow) {
             final boolean delete = messageObject.messageOwner.ttl != 0x7FFFFFFF;
@@ -14902,9 +14913,20 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
     }
 
     private Runnable sendSecretMediaDelete(MessageObject messageObject) {
-        if (messageObject == null || messageObject.isOut() || !messageObject.isSecretMedia() || messageObject.messageOwner.ttl != 0x7FFFFFFF) {
-            return null;
+        return sendSecretMediaDelete(messageObject, false);
+    }
+
+    private Runnable sendSecretMediaDelete(MessageObject messageObject, boolean fromMenu) {
+        if (!fromMenu) {
+            if (messageObject == null || messageObject.isOut() || !messageObject.isSecretMedia() || messageObject.messageOwner.ttl != 0x7FFFFFFF) {
+                return null;
+            }
+        } else {
+            if (messageObject == null || messageObject.isOut() || !messageObject.isSecretMedia(true) || messageObject.messageOwner.ttl != 0x7FFFFFFF) {
+                return null;
+            }
         }
+
         final long taskId = getMessagesController().createDeleteShowOnceTask(dialog_id, messageObject.getId());
         messageObject.forceExpired = true;
         if (messageObject.isOutOwner() || !messageObject.isRoundOnce() && !messageObject.isVoiceOnce()) {
@@ -29967,6 +29989,12 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                     options.add(OPTION_DETAILS);
                     icons.add(R.drawable.msg_info);
                 }
+
+                if (primaryMessage.isSecretMedia(true)) {
+                    items.add(LocaleController.getString(R.string.SendAsViewed));
+                    options.add(OPTION_SEND_AS_VIEWED);
+                    icons.add(R.drawable.msg_info);
+                }
             }
 
             if (selectedObject != null && selectedObject.isHiddenSensitive() && !selectedObject.isMediaSpoilersRevealed) {
@@ -32632,6 +32660,12 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                 break;
             } case OPTION_DETAILS: {
                 presentFragment(new MessageDetailsActivity(selectedObject));
+                break;
+            } case OPTION_SEND_AS_VIEWED: {
+                Runnable openAction = sendSecretMessageRead(selectedObject, false, true);
+                Runnable closeAction = sendSecretMediaDelete(selectedObject, true);
+                openAction.run();
+                closeAction.run();
                 break;
             } case OPTION_VIEW_HISTORY: {
                 TLRPC.Peer peer = selectedObject.messageOwner.from_id;
