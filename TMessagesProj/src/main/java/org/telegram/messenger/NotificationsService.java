@@ -37,7 +37,7 @@ public class NotificationsService extends Service {
             notificationManager.createNotificationChannel(channel);
             startForeground(38264,
                     new NotificationCompat.Builder(this, "nekogram")
-                            .setSmallIcon(R.drawable.iconnotification)
+                            .setSmallIcon(R.drawable.cat)
                             .setColor(NekoConfig.getNotificationColor())
                             .setColorized(true)
                             .setShowWhen(false)

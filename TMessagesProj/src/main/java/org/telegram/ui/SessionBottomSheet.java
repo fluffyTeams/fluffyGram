@@ -361,7 +361,7 @@ public class SessionBottomSheet extends BottomSheet {
             colorKey2 = Theme.key_avatar_background2Cyan;
         } else if (session.app_name.contains("Nekogram")) {
             animation = false;
-            iconId = R.drawable.iconnotification;
+            iconId = R.drawable.cat;
             colorKey = Theme.key_avatar_backgroundBlue;
             colorKey2 = Theme.key_avatar_background2Blue;
         } else if (platform.contains("android")) {
