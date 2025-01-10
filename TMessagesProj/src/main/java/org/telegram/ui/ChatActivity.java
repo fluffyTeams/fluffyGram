@@ -29990,7 +29990,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                     icons.add(R.drawable.msg_info);
                 }
 
-                if (primaryMessage.isSecretMedia(true) && primaryMessage.isOut()) {
+                if (primaryMessage.isSecretMedia(true) && !primaryMessage.isOut()) {
                     items.add(LocaleController.getString(R.string.SendAsViewed));
                     options.add(OPTION_SEND_AS_VIEWED);
                     icons.add(R.drawable.msg_info);
