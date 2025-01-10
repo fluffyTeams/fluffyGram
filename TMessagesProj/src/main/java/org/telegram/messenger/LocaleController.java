@@ -2414,17 +2414,20 @@ public class LocaleController {
             long difference = currentTime - date;
 
             if (difference < 60 * 1000) {
-                int seconds = (int) (difference / 1000);
-                return getInstance().getFormatterDay().format(new Date(date)) + " (" + seconds + "s)";
+            int seconds = (int) (difference / 1000);
+            return getInstance().getFormatterDay().format(new Date(date)) + " (" + seconds + "s)";
             } else if (difference < 60 * 60 * 1000) {
                 int minutes = (int) (difference / (60 * 1000));
-                return getInstance().getFormatterDay().format(new Date(date)) + " (" + minutes + "m)";
+                int seconds = (int) (difference % (60 * 1000) / 1000);
+                return getInstance().getFormatterDay().format(new Date(date)) + " (" + minutes + "m " + seconds + "s)";
             } else if (difference < 24 * 60 * 60 * 1000) {
                 int hours = (int) (difference / (60 * 60 * 1000));
-                return getInstance().getFormatterDay().format(new Date(date)) + " (" + hours + "h)";
+                int minutes = (int) (difference % (60 * 60 * 1000) / (60 * 1000));
+                return getInstance().getFormatterDay().format(new Date(date)) + " (" + hours + "h " + minutes + "m)";
             } else {
                 int days = (int) (difference / (24 * 60 * 60 * 1000));
-                return getInstance().getFormatterDay().format(new Date(date)) + " (" + days + "d)";
+                int hours = (int) (difference % (24 * 60 * 60 * 1000) / (60 * 60 * 1000));
+                return getInstance().getFormatterDay().format(new Date(date)) + " (" + days + "d " + hours + "h)";
             }
                 /*int diff = (int) (ConnectionsManager.getInstance().getCurrentTime() - date) / 60;
                 if (diff < 1) {
