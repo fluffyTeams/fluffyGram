@@ -1647,18 +1647,18 @@ public class ChatActionCell extends BaseCell implements DownloadController.FileD
                 CharSequence description;
                 String action = null;
                 boolean actionClickableAsImage = true;
-                if (messageObject.getDialogId() < 0) {
-                    description = messageObject.messageText;
-                } else if (!messageObject.isOutOwner() && messageObject.isWallpaperForBoth() && messageObject.isCurrentWallpaper()) {
-                    description = messageObject.messageText;
-                    action = getString(R.string.RemoveWallpaperAction);
-                    actionClickableAsImage = false;
-                } else if (user != null && user.id == UserConfig.getInstance(currentAccount).clientUserId) {
-                    description = messageObject.messageText;
-                } else {
-                    description = messageObject.messageText;
-                    action = getString(R.string.ViewWallpaperAction);
-                }
+//                if (messageObject.getDialogId() < 0) {
+//                    description = messageObject.messageText;
+//                } else if (!messageObject.isOutOwner() && messageObject.isWallpaperForBoth() && messageObject.isCurrentWallpaper()) {
+//                    description = messageObject.messageText;
+//                    action = getString(R.string.RemoveWallpaperAction);
+//                    actionClickableAsImage = false;
+//                } else if (user != null && user.id == UserConfig.getInstance(currentAccount).clientUserId) {
+//                    description = messageObject.messageText;
+//                } else {
+                description = messageObject.messageText;
+                action = getString(R.string.ViewWallpaperAction);
+//                }
                 createGiftPremiumLayouts(null, null, description, false, action, null, giftRectSize, actionClickableAsImage);
                 textLayout = null;
                 textHeight = 0;
