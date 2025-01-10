@@ -16008,6 +16008,9 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                 currentTimeString.insert(0, ", ");
             }
         }
+        if (messageObject.isSecretMedia(true)) {
+            currentTimeString.insert(0, "sd ");
+        }
         timeTextWidth = timeWidth = (int) Math.ceil(Theme.chat_timePaint.measureText(currentTimeString, 0, currentTimeString == null ? 0 : currentTimeString.length()));
         if (customDrawableWidth != 0) {
             timeTextWidth = timeWidth += customDrawableWidth * (Theme.chat_timePaint.getTextSize() - AndroidUtilities.dp(2)) / customDrawableWidth;
