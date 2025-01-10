@@ -58,6 +58,7 @@ public class NekoChatSettingsActivity extends BaseNekoSettingsActivity implement
     private int stickerSize2Row;
 
     private int chatRow;
+    private int botManageShowerRow;
     private int ignoreBlockedRow;
     private int shouldNotTrustMe;
     private int quickForwardRow;
@@ -135,6 +136,11 @@ public class NekoChatSettingsActivity extends BaseNekoSettingsActivity implement
             NekoConfig.toggleIgnoreBlocked();
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NekoConfig.ignoreBlocked);
+            }
+        } else if (position == botManageShowerRow) {
+            NekoConfig.toggleBotManageShower();
+            if (view instanceof TextCheckCell) {
+                ((TextCheckCell) view).setChecked(NekoConfig.botManageShower);
             }
         } else if (position == shouldNotTrustMe) {
             NekoConfig.toggleShouldNotTrustMe();
@@ -421,6 +427,7 @@ public class NekoChatSettingsActivity extends BaseNekoSettingsActivity implement
 
         chatRow = addRow("chat");
         ignoreBlockedRow = addRow("ignoreBlocked");
+        botManageShowerRow = addRow("BotManageShower");
         shouldNotTrustMe = addRow("shouldNotTrustMe");
         quickForwardRow = addRow("quickForward");
         hideKeyboardOnChatScrollRow = addRow("hideKeyboardOnChatScroll");
@@ -727,6 +734,8 @@ public class NekoChatSettingsActivity extends BaseNekoSettingsActivity implement
                     textCell.setEnabled(true, null);
                     if (position == ignoreBlockedRow) {
                         textCell.setTextAndValueAndCheck(LocaleController.getString(R.string.IgnoreBlocked), LocaleController.getString(R.string.IgnoreBlockedAbout), NekoConfig.ignoreBlocked, true, divider);
+                    } else if (position == botManageShowerRow) {
+                        textCell.setTextAndCheck(LocaleController.getString(R.string.botManageShowerRowTitle), NekoConfig.botManageShower, divider);
                     } else if (position == shouldNotTrustMe) {
                         textCell.setTextAndValueAndCheck(LocaleController.getString(R.string.shouldNotTrustMe), LocaleController.getString(R.string.shouldNotTrustMeAbout), NekoConfig.shouldNOTTrustMe, true, divider);
                     } else if (position == hideKeyboardOnChatScrollRow) {

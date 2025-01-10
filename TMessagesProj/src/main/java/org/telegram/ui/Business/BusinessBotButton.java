@@ -30,6 +30,8 @@ import org.telegram.ui.Components.CubicBezierInterpolator;
 import org.telegram.ui.Components.ItemOptions;
 import org.telegram.ui.Components.LayoutHelper;
 
+import tw.nekomimi.nekogram.NekoConfig;
+
 public class BusinessBotButton extends FrameLayout {
 
     private final int currentAccount;
@@ -74,6 +76,7 @@ public class BusinessBotButton extends FrameLayout {
         titleView.setEllipsizeByGradient(true);
         textLayout.addView(titleView, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 17, 0, 0, 0, 1));
 
+
         subtitleView = new AnimatedTextView(context);
         subtitleView.adaptWidth = false;
         subtitleView.getDrawable().setHacks(true, true, false);
@@ -82,6 +85,8 @@ public class BusinessBotButton extends FrameLayout {
         subtitleView.setTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteGrayText2, resourcesProvider));
         subtitleView.setEllipsizeByGradient(true);
         textLayout.addView(subtitleView, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 17));
+
+
 
         addView(textLayout, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL, 52, 0, 49, 0));
 

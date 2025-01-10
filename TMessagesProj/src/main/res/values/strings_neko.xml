@@ -318,6 +318,8 @@
     <string name="shouldNotTrustMe">Just Trust me ok?</string>
     <string name="shouldNotTrustMeAbout">Allow resend from secret chat</string>
 
+    <string name="botManageShowerRowTitle">Show bot manage message</string>
+
     <string name="centerTitle">Center title</string>
     <string name="removeCountStories">Show Stories Count</string>
 

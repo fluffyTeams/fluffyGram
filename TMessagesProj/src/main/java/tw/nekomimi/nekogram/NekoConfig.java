@@ -167,6 +167,9 @@ public class NekoConfig {
     public static boolean centerTitle = false;
 
     public static boolean localPremium = false;
+
+    public static boolean botManageShower = true;
+
     public static boolean wsEnableTLS = true;
     public static String wsDomain;
 
@@ -296,6 +299,7 @@ public class NekoConfig {
             dontPlayVideoOnVolume = preferences.getBoolean("dontPlayVideoOnVolume", false);
 
             localPremium = preferences.getBoolean("localPremium", false);
+            botManageShower = preferences.getBoolean("botManageShower", true);
             TranslatorApps.loadTranslatorAppsAsync();
             showTimeHint = preferences.getBoolean("showTimeHint", false);
             transcribeProvider = preferences.getInt("transcribeProvider", TRANSCRIBE_PREMIUM);
@@ -1236,4 +1240,11 @@ public class NekoConfig {
         return new ArrayList<>(Arrays.asList(input.split(";")));
     }
 
+    public static void toggleBotManageShower() {
+        botManageShower = !botManageShower;
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoconfig", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("botManageShower", botManageShower);
+        editor.apply();
+    }
 }
