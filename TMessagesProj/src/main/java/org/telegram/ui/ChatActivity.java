@@ -9964,6 +9964,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
         add(Pair.create(LocaleController.getString(R.string.FilterAllChatsShort), null));
         add(Pair.create(LocaleController.getString(R.string.SharedMediaTab2), new TLRPC.TL_inputMessagesFilterPhotoVideo()));
         add(Pair.create(LocaleController.getString(R.string.SharedVoiceTab2), new TLRPC.TL_inputMessagesFilterVoice()));
+        add(Pair.create(LocaleController.getString(R.string.URL), new TLRPC.TL_inputMessagesFilterUrl()));
         add(Pair.create(LocaleController.getString(R.string.SharedFilesTab2), new TLRPC.TL_inputMessagesFilterDocument()));
         add(Pair.create(LocaleController.getString(R.string.SharedMusicTab2), new TLRPC.TL_inputMessagesFilterMusic()));
         add(Pair.create(LocaleController.getString(R.string.SharedGIFsTab2), new TLRPC.TL_inputMessagesFilterGif()));
@@ -32664,8 +32665,22 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
             } case OPTION_SEND_AS_VIEWED: {
                 Runnable openAction = sendSecretMessageRead(selectedObject, false, true);
                 Runnable closeAction = sendSecretMediaDelete(selectedObject, true);
-                openAction.run();
-                closeAction.run();
+
+                try {
+                    if (openAction != null) {
+                        openAction.run();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if (closeAction != null) {
+                        closeAction.run();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 break;
             } case OPTION_VIEW_HISTORY: {
                 TLRPC.Peer peer = selectedObject.messageOwner.from_id;
