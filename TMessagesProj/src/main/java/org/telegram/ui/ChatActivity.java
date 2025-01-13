@@ -3991,25 +3991,34 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
             }
             searchItemVisible = false;
         }
+        audioCallIconItem = menu.lazilyAddItem(call, R.drawable.ic_call, themeDelegate);
+        audioCallIconItem.setContentDescription(LocaleController.getString(R.string.Call));
+        showAudioCallAsIcon = false;
+        audioCallIconItem.setVisibility(View.GONE);
 
-        if (chatMode == 0 && (threadMessageId == 0 || isTopic) && !UserObject.isReplyUser(currentUser) && !isReport()) {
-            TLRPC.UserFull userFull = null;
-            if (currentUser != null) {
-                audioCallIconItem = menu.lazilyAddItem(call, R.drawable.ic_call, themeDelegate);
-                audioCallIconItem.setContentDescription(LocaleController.getString(R.string.Call));
-                userFull = getMessagesController().getUserFull(currentUser.id);
-                if (userFull != null && userFull.phone_calls_available) {
-                    showAudioCallAsIcon = !inPreviewMode;
-                    audioCallIconItem.setVisibility(View.VISIBLE);
-                } else {
-                    showAudioCallAsIcon = false;
-                    audioCallIconItem.setVisibility(View.GONE);
-                }
-                if (avatarContainer != null) {
-                    avatarContainer.setTitleExpand(showAudioCallAsIcon);
-                }
-            }
+        if (avatarContainer != null) {
+            avatarContainer.setTitleExpand(showAudioCallAsIcon);
         }
+
+//                    audioCallIconItem.setVisibility(View.GONE);
+//        if (chatMode == 0 && (threadMessageId == 0 || isTopic) && !UserObject.isReplyUser(currentUser) && !isReport()) {
+//            TLRPC.UserFull userFull = null;
+//            if (currentUser != null) {
+//                audioCallIconItem = menu.lazilyAddItem(call, R.drawable.ic_call, themeDelegate);
+//                audioCallIconItem.setContentDescription(LocaleController.getString(R.string.Call));
+//                userFull = getMessagesController().getUserFull(currentUser.id);
+//                if (userFull != null && userFull.phone_calls_available) {
+//                    showAudioCallAsIcon = !inPreviewMode;
+//                    audioCallIconItem.setVisibility(View.VISIBLE);
+//                } else {
+//                    showAudioCallAsIcon = false;
+//                    audioCallIconItem.setVisibility(View.GONE);
+//                }
+//                if (avatarContainer != null) {
+//                    avatarContainer.setTitleExpand(showAudioCallAsIcon);
+//                }
+//            }
+//        }
 
         editTextItem = menu.lazilyAddItem(chat_menu_edit_text_options, R.drawable.ic_ab_other, themeDelegate);
         editTextItem.setContentDescription(LocaleController.getString(R.string.AccDescrMoreOptions));
@@ -17413,7 +17422,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                     }
                 }
                 if (!actionBar.isSearchFieldVisible() && audioCallIconItem != null) {
-                    audioCallIconItem.setVisibility((showAudioCallAsIcon && !showSearchAsIcon) ? View.VISIBLE : View.GONE);
+                    audioCallIconItem.setVisibility(View.GONE);
                 }
                 if (headerItem != null) {
                     TLRPC.UserFull userInfo = getCurrentUserInfo();
@@ -28195,8 +28204,8 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
         if (currentUser != null && audioCallIconItem != null) {
             TLRPC.UserFull userFull = getMessagesController().getUserFull(currentUser.id);
             if (userFull != null && userFull.phone_calls_available) {
-                showAudioCallAsIcon = !inPreviewMode;
-                audioCallIconItem.setVisibility(View.VISIBLE);
+                showAudioCallAsIcon = false;
+                audioCallIconItem.setVisibility(View.GONE);
             } else {
                 showAudioCallAsIcon = false;
                 audioCallIconItem.setVisibility(View.GONE);
@@ -36679,7 +36688,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                     headerItem.setVisibility(View.VISIBLE);
                 }
                 if (audioCallIconItem != null && showAudioCallAsIcon) {
-                    audioCallIconItem.setVisibility(View.VISIBLE);
+                    audioCallIconItem.setVisibility(View.GONE);
                 }
                 if (searchIconItem != null && showSearchAsIcon) {
                     searchIconItem.setVisibility(View.VISIBLE);
