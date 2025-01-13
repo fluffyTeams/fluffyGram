@@ -3992,24 +3992,24 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
             searchItemVisible = false;
         }
 
-//        if (chatMode == 0 && (threadMessageId == 0 || isTopic) && !UserObject.isReplyUser(currentUser) && !isReport()) {
-//            TLRPC.UserFull userFull = null;
-//            if (currentUser != null) {
-//                audioCallIconItem = menu.lazilyAddItem(call, R.drawable.ic_call, themeDelegate);
-//                audioCallIconItem.setContentDescription(LocaleController.getString(R.string.Call));
-//                userFull = getMessagesController().getUserFull(currentUser.id);
-//                if (userFull != null && userFull.phone_calls_available) {
-//                    showAudioCallAsIcon = !inPreviewMode;
-//                    audioCallIconItem.setVisibility(View.VISIBLE);
-//                } else {
-//                    showAudioCallAsIcon = false;
-//                    audioCallIconItem.setVisibility(View.GONE);
-//                }
-//                if (avatarContainer != null) {
-//                    avatarContainer.setTitleExpand(showAudioCallAsIcon);
-//                }
-//            }
-//        }
+        if (chatMode == 0 && (threadMessageId == 0 || isTopic) && !UserObject.isReplyUser(currentUser) && !isReport()) {
+            TLRPC.UserFull userFull = null;
+            if (currentUser != null) {
+                audioCallIconItem = menu.lazilyAddItem(call, R.drawable.ic_call, themeDelegate);
+                audioCallIconItem.setContentDescription(LocaleController.getString(R.string.Call));
+                userFull = getMessagesController().getUserFull(currentUser.id);
+                if (userFull != null && userFull.phone_calls_available) {
+                    showAudioCallAsIcon = !inPreviewMode;
+                    audioCallIconItem.setVisibility(View.VISIBLE);
+                } else {
+                    showAudioCallAsIcon = false;
+                    audioCallIconItem.setVisibility(View.GONE);
+                }
+                if (avatarContainer != null) {
+                    avatarContainer.setTitleExpand(showAudioCallAsIcon);
+                }
+            }
+        }
 
         editTextItem = menu.lazilyAddItem(chat_menu_edit_text_options, R.drawable.ic_ab_other, themeDelegate);
         editTextItem.setContentDescription(LocaleController.getString(R.string.AccDescrMoreOptions));
@@ -22799,35 +22799,39 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                     chatActivityEnterView.updateGiftButton(true);
                 }
                 if (headerItem != null) {
-                    showAudioCallAsIcon = userInfo.phone_calls_available && !inPreviewMode;
-                    if (avatarContainer != null) {
-                        avatarContainer.setTitleExpand(showAudioCallAsIcon);
-                    }
-                    if (userInfo.phone_calls_available) {
-                        if (showAudioCallAsIcon) {
-                            if (audioCallIconItem != null) {
-                                View item = audioCallIconItem.createView();
-                                if (openAnimationStartTime != 0 && item.getVisibility() != View.VISIBLE) {
-                                    item.setAlpha(0f);
-                                    item.animate().alpha(1f).setDuration(160).setInterpolator(CubicBezierInterpolator.EASE_IN).setStartDelay(50).start();
-                                }
-                                audioCallIconItem.setVisibility(View.VISIBLE);
-                            }
-                        } else {
-                            headerItem.showSubItem(call, true);
-                        }
-                        if (userInfo.video_calls_available) {
-                            headerItem.showSubItem(video_call, true);
-                        } else {
-                            headerItem.hideSubItem(video_call);
-                        }
-                    } else {
-                        headerItem.hideSubItem(call);
-                        headerItem.hideSubItem(video_call);
-                        if (audioCallIconItem != null) {
-                            audioCallIconItem.setVisibility(View.GONE);
-                        }
-                    }
+                    headerItem.hideSubItem(call);
+                    headerItem.hideSubItem(video_call);
+                    audioCallIconItem.setVisibility(View.GONE);
+
+//                    showAudioCallAsIcon = userInfo.phone_calls_available && !inPreviewMode;
+//                    if (avatarContainer != null) {
+//                        avatarContainer.setTitleExpand(showAudioCallAsIcon);
+//                    }
+//                    if (userInfo.phone_calls_available) {
+//                        if (showAudioCallAsIcon) {
+//                            if (audioCallIconItem != null) {
+//                                View item = audioCallIconItem.createView();
+//                                if (openAnimationStartTime != 0 && item.getVisibility() != View.VISIBLE) {
+//                                    item.setAlpha(0f);
+//                                    item.animate().alpha(1f).setDuration(160).setInterpolator(CubicBezierInterpolator.EASE_IN).setStartDelay(50).start();
+//                                }
+//                                audioCallIconItem.setVisibility(View.VISIBLE);
+//                            }
+//                        } else {
+//                            headerItem.showSubItem(call, true);
+//                        }
+//                        if (userInfo.video_calls_available) {
+//                            headerItem.showSubItem(video_call, true);
+//                        } else {
+//                            headerItem.hideSubItem(video_call);
+//                        }
+//                    } else {
+//                        headerItem.hideSubItem(call);
+//                        headerItem.hideSubItem(video_call);
+//                        if (audioCallIconItem != null) {
+//                            audioCallIconItem.setVisibility(View.GONE);
+//                        }
+//                    }
                 }
                 checkActionBarMenu(fragmentOpened);
                 if (!inMenuMode && !loadingPinnedMessagesList && !pinnedMessageIds.isEmpty() && userInfo.pinned_msg_id > pinnedMessageIds.get(0)) {

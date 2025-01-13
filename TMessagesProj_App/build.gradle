@@ -68,7 +68,7 @@ android {
 
     defaultConfig {
         versionName APP_VERSION_NAME
-
+        resValue "string", "maps_api_key", localProperties.getProperty("MAPS_API_KEY")
         multiDexEnabled true
     }
 

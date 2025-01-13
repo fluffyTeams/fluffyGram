@@ -8,7 +8,6 @@ import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.R;
 import org.telegram.messenger.browser.Browser;
 import org.telegram.ui.ActionBar.BaseFragment;
-import org.telegram.ui.Components.BulletinFactory;
 import org.telegram.ui.LaunchActivity;
 
 import java.util.Locale;
@@ -78,9 +77,6 @@ public class SettingsHelper {
                     case "g":
                         fragment = new NekoGeneralSettingsActivity();
                         break;
-                    case "reportid":
-                        SettingsHelper.copyReportId();
-                        return;
                     case "update":
                         LaunchActivity.instance.checkAppUpdate(true, progress);
                         return;
@@ -101,10 +97,6 @@ public class SettingsHelper {
         }
     }
 
-    public static void copyReportId() {
-        AndroidUtilities.addToClipboard(AnalyticsHelper.userId);
-        BulletinFactory.global().createSimpleBulletin(R.raw.copy, LocaleController.getString(R.string.TextCopied), LocaleController.getString(R.string.CopyReportIdDescription)).show();
-    }
 
     public interface Callback {
         void presentFragment(BaseFragment fragment);
