@@ -1,5 +1,7 @@
 package tw.nekomimi.nekogram.settings;
 
+import static org.telegram.messenger.browser.Browser.*;
+
 import android.content.Context;
 import android.view.View;
 import android.view.accessibility.AccessibilityManager;
@@ -29,7 +31,6 @@ import tw.nekomimi.nekogram.helpers.remote.UpdateHelper;
 
 public class NekoSettingsActivity extends BaseNekoSettingsActivity {
 
-    private final List<ConfigHelper.News> news = ConfigHelper.getNews();
     private boolean checkingUpdate = false;
 
     private int categoriesRow;
@@ -40,11 +41,16 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
     private int experimentRow;
     private int accessibilityRow;
     private int categories2Row;
+    private int categories2RowFork;
 
     private int aboutRow;
+    private int aboutForkRow;
+
     private int channelRow;
     private int websiteRow;
     private int sourceCodeRow;
+    private int sourceCodeForkRow;
+
     private int translationRow;
     private int donateRow;
     private int checkUpdateRow;
@@ -57,9 +63,7 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
     public View createView(Context context) {
         View fragmentView = super.createView(context);
 
-        actionBar.createMenu()
-                .addItem(0, R.drawable.cloud_sync)
-                .setOnClickListener(v -> CloudSettingsHelper.getInstance().showDialog(NekoSettingsActivity.this));
+        actionBar.createMenu();
 
         return fragmentView;
     }
@@ -83,24 +87,13 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
         } else if (position == donateRow) {
             presentFragment(new NekoDonateActivity());
         } else if (position == translationRow) {
-            Browser.openUrl(getParentActivity(), "https://neko.crowdin.com/nekogram");
+            openUrl(getParentActivity(), "https://neko.crowdin.com/nekogram");
         } else if (position == websiteRow) {
-            Browser.openUrl(getParentActivity(), "https://nekogram.app");
+            openUrl(getParentActivity(), "https://nekogram.app");
         } else if (position == sourceCodeRow) {
-            Browser.openUrl(getParentActivity(), "https://github.com/Nekogram/Nekogram");
-        } else if (position == checkUpdateRow) {
-            ((LaunchActivity) getParentActivity()).checkAppUpdate(true, new Browser.Progress() {
-                @Override
-                public void end() {
-                    checkingUpdate = false;
-                    listAdapter.notifyItemChanged(checkUpdateRow);
-                }
-            });
-            checkingUpdate = true;
-            listAdapter.notifyItemChanged(checkUpdateRow);
-        } else if (position >= sponsorRow && position < sponsor2Row) {
-            ConfigHelper.News item = news.get(position - sponsorRow);
-            Browser.openUrl(getParentActivity(), item.url);
+            openUrl(getParentActivity(), "https://github.com/Nekogram/Nekogram");
+        } else if (position == sourceCodeForkRow) {
+            openUrl(getParentActivity(), "https://github.com/krolchonok/fluffygram");
         }
     }
 
@@ -139,25 +132,23 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
         } else {
             accessibilityRow = -1;
         }
+        categories2RowFork = addRow();
+        aboutForkRow = addRow("about");
+        sourceCodeForkRow = addRow("sourceCodeForkRow");
+
         categories2Row = addRow();
 
         aboutRow = addRow("about");
         channelRow = addRow("channel");
         websiteRow = addRow("website");
+        sourceCodeRow = addRow("sourceCodeRow");
         sourceCodeRow = addRow("sourceCode");
         translationRow = addRow("translation");
-        donateRow = addRow("donate");
-        checkUpdateRow = addRow("checkUpdate");
         about2Row = addRow();
 
-        if (!news.isEmpty()) {
-            sponsorRow = addRow();
-            rowCount += news.size() - 1;
-            sponsor2Row = addRow();
-        } else {
-            sponsorRow = -1;
-            sponsor2Row = -1;
-        }
+        sponsorRow = -1;
+        sponsor2Row = -1;
+
     }
 
     private class ListAdapter extends BaseListAdapter {
@@ -177,6 +168,8 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
                         textCell.setTextAndValue(LocaleController.getString(R.string.OfficialSite), "nekogram.app", divider);
                     } else if (position == sourceCodeRow) {
                         textCell.setTextAndValue(LocaleController.getString(R.string.ViewSourceCode), "GitHub", divider);
+                    } else if (position == sourceCodeForkRow) {
+                        textCell.setTextAndValue(LocaleController.getString(R.string.ViewSourceCode), "GitHub", divider);
                     }
                     break;
                 }
@@ -186,6 +179,8 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
                         headerCell.setText(LocaleController.getString(R.string.Categories));
                     } else if (position == aboutRow) {
                         headerCell.setText(LocaleController.getString(R.string.About));
+                    } else if (position == aboutForkRow) {
+                        headerCell.setText(LocaleController.getString(R.string.AboutFork));
                     }
                     break;
                 }
@@ -194,15 +189,6 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
                     textCell.setMultilineDetail(true);
                     if (position == translationRow) {
                         textCell.setTextAndValue(LocaleController.getString(R.string.Translation), LocaleController.getString(R.string.TranslationAbout), divider);
-                    } else if (position == donateRow) {
-                        textCell.setTextAndValue(LocaleController.getString(R.string.Donate), LocaleController.getString(R.string.DonateAbout), divider);
-                    } else if (position == checkUpdateRow) {
-                        textCell.setTextAndValue(LocaleController.getString(R.string.CheckUpdate),
-                                checkingUpdate ? LocaleController.getString(R.string.CheckingUpdate) :
-                                        UpdateHelper.formatDateUpdate(SharedConfig.lastUpdateCheckTime), divider);
-                    } else if (position >= sponsorRow && position < sponsor2Row) {
-                        ConfigHelper.News item = news.get(position - sponsorRow);
-                        textCell.setTextAndValue(item.title, item.summary, divider);
                     }
                     break;
                 }
@@ -230,11 +216,11 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
         public int getItemViewType(int position) {
             if (position >= sponsorRow && position < sponsor2Row) {
                 return TYPE_DETAIL_SETTINGS;
-            } else if (position == categories2Row || position == about2Row || position == sponsor2Row) {
+            } else if (position == categories2Row || position == about2Row || position == sponsor2Row || position == categories2RowFork) {
                 return TYPE_SHADOW;
-            } else if (position >= channelRow && position < translationRow) {
+            } else if (position >= channelRow && position < translationRow || position == sourceCodeForkRow) {
                 return TYPE_SETTINGS;
-            } else if (position == categoriesRow || position == aboutRow) {
+            } else if (position == categoriesRow || position == aboutRow || position == aboutForkRow) {
                 return TYPE_HEADER;
             } else if (position >= translationRow && position < about2Row) {
                 return TYPE_DETAIL_SETTINGS;
