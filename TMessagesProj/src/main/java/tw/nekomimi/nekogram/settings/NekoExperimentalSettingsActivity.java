@@ -29,9 +29,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.helpers.AnalyticsHelper;
 import tw.nekomimi.nekogram.helpers.PopupHelper;
-import tw.nekomimi.nekogram.helpers.SettingsHelper;
 
 public class NekoExperimentalSettingsActivity extends BaseNekoSettingsActivity {
 
@@ -171,24 +169,11 @@ public class NekoExperimentalSettingsActivity extends BaseNekoSettingsActivity {
                 NekoConfig.setDownloadSpeedBoost(types.get(i));
                 listAdapter.notifyItemChanged(downloadSpeedBoostRow, PARTIAL);
             }, resourcesProvider);
-        } else if (position == sendBugReportRow) {
-            if (AnalyticsHelper.analyticsDisabled) {
-                return;
-            }
-            AnalyticsHelper.toggleSendBugReport();
-            if (view instanceof TextCheckCell) {
-                ((TextCheckCell) view).setChecked(AnalyticsHelper.sendBugReport);
-            }
-            listAdapter.notifyItemChanged(copyReportIdRow);
         } else if (position == deleteDataRow) {
-            if (AnalyticsHelper.analyticsDisabled) {
-                return;
-            }
             AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity(), resourcesProvider);
             builder.setTitle(LocaleController.getString(R.string.AnonymousDataDelete));
             builder.setMessage(LocaleController.getString(R.string.AnonymousDataDeleteDesc));
             builder.setPositiveButton(LocaleController.getString(R.string.Delete), (dialog, which) -> {
-                AnalyticsHelper.setAnalyticsDisabled();
                 listAdapter.notifyItemRangeChanged(sendBugReportRow, 3);
             });
             builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
@@ -217,11 +202,6 @@ public class NekoExperimentalSettingsActivity extends BaseNekoSettingsActivity {
             if (view instanceof TextCheckCell) {
                 ((TextCheckCell) view).setChecked(NekoConfig.ignoreContentRestriction);
             }
-        } else if (position == copyReportIdRow) {
-            if (AnalyticsHelper.analyticsDisabled || !AnalyticsHelper.sendBugReport) {
-                return;
-            }
-            SettingsHelper.copyReportId();
         }
     }
 
@@ -261,15 +241,10 @@ public class NekoExperimentalSettingsActivity extends BaseNekoSettingsActivity {
         showRPCErrorRow = addRow("showRPCError");
         experiment2Row = addRow();
 
-        if (AnalyticsHelper.isSettingsAvailable()) {
-            dataRow = addRow();
-            sendBugReportRow = addRow();
-            deleteDataRow = addRow();
-        } else {
-            dataRow = -1;
-            sendBugReportRow = -1;
-            deleteDataRow = -1;
-        }
+        dataRow = -1;
+        sendBugReportRow = -1;
+        deleteDataRow = -1;
+
         copyReportIdRow = addRow("copyReportId");
         data2Row = addRow();
 
@@ -320,9 +295,6 @@ public class NekoExperimentalSettingsActivity extends BaseNekoSettingsActivity {
                         textCell.setTextAndCheck(LocaleController.getString(R.string.MapDriftingFix), NekoConfig.mapDriftingFix, divider);
                     } else if (position == showRPCErrorRow) {
                         textCell.setTextAndValueAndCheck(LocaleController.getString(R.string.ShowRPCError), LocaleController.formatString(R.string.ShowRPCErrorException, "FILE_REFERENCE_EXPIRED"), NekoConfig.showRPCError, true, divider);
-                    } else if (position == sendBugReportRow) {
-                        textCell.setEnabled(!AnalyticsHelper.analyticsDisabled, null);
-                        textCell.setTextAndValueAndCheck(LocaleController.getString(R.string.SendBugReport), LocaleController.getString(R.string.SendBugReportDesc), !AnalyticsHelper.analyticsDisabled && AnalyticsHelper.sendBugReport, true, divider);
                     } else if (position == sendLargePhotosRow) {
                         textCell.setTextAndValueAndCheck(LocaleController.getString(R.string.SendLargePhotos), LocaleController.getString(R.string.SendLargePhotosAbout), NekoConfig.sendLargePhotos, true, divider);
                     } else if (position == contentRestrictionRow) {
@@ -343,13 +315,6 @@ public class NekoExperimentalSettingsActivity extends BaseNekoSettingsActivity {
                     TextDetailSettingsCell cell = (TextDetailSettingsCell) holder.itemView;
                     cell.setEnabled(true);
                     cell.setMultilineDetail(true);
-                    if (position == deleteDataRow) {
-                        cell.setEnabled(!AnalyticsHelper.analyticsDisabled);
-                        cell.setTextAndValue(LocaleController.getString(R.string.AnonymousDataDelete), LocaleController.getString(R.string.AnonymousDataDeleteDesc), divider);
-                    } else if (position == copyReportIdRow) {
-                        cell.setEnabled(!AnalyticsHelper.analyticsDisabled && AnalyticsHelper.sendBugReport);
-                        cell.setTextAndValue(LocaleController.getString(R.string.CopyReportId), LocaleController.getString(R.string.CopyReportIdDescription), divider);
-                    }
                     break;
                 }
                 case TYPE_INFO_PRIVACY: {
@@ -363,20 +328,8 @@ public class NekoExperimentalSettingsActivity extends BaseNekoSettingsActivity {
         }
 
         @Override
-        public boolean isEnabled(RecyclerView.ViewHolder holder) {
-            int position = holder.getAdapterPosition();
-            if (position == sendBugReportRow || position == deleteDataRow) {
-                return !AnalyticsHelper.analyticsDisabled;
-            }
-            if (position == copyReportIdRow) {
-                return !AnalyticsHelper.analyticsDisabled && AnalyticsHelper.sendBugReport;
-            }
-            return super.isEnabled(holder);
-        }
-
-        @Override
         public int getItemViewType(int position) {
-            if (position == experiment2Row || position == deleteAccount2Row || (position == data2Row && !AnalyticsHelper.isSettingsAvailable())) {
+            if (position == experiment2Row || position == deleteAccount2Row ) {
                 return TYPE_SHADOW;
             } else if (position == deleteAccountRow || position == downloadSpeedBoostRow || position == springAnimationRow) {
                 return TYPE_SETTINGS;

@@ -107,7 +107,6 @@ public class SettingsHelper {
     }
 
     public static void copyReportId() {
-        AndroidUtilities.addToClipboard(AnalyticsHelper.userId);
         BulletinFactory.global().createSimpleBulletin(R.raw.copy, LocaleController.getString(R.string.TextCopied), LocaleController.getString(R.string.CopyReportIdDescription)).show();
     }
 

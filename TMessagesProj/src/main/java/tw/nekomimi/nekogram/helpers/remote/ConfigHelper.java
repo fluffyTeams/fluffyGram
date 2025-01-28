@@ -52,33 +52,6 @@ public class ConfigHelper extends BaseRemoteHelper {
         return config.cryptos;
     }
 
-    public static List<News> getNews() {
-        Config config = getInstance().getConfig();
-        if (config == null || config.news == null) {
-            return Collections.emptyList();
-        }
-        ArrayList<News> newsItems = new ArrayList<>();
-        config.news.forEach(news -> {
-            if (news.chineseOnly != null && news.chineseOnly && !NekoConfig.isChineseUser) {
-                return;
-            }
-            if (news.direct != null && news.direct && !NekoConfig.isDirectApp()) {
-                return;
-            }
-            if (news.source != null && news.source.equals(BuildConfig.BUILD_TYPE)) {
-                return;
-            }
-            if (news.maxVersion != null && news.maxVersion < BuildConfig.VERSION_CODE) {
-                return;
-            }
-            if (news.minVersion != null && news.minVersion > BuildConfig.VERSION_CODE) {
-                return;
-            }
-            newsItems.add(news);
-        });
-        return newsItems;
-    }
-
     public static void overrideChat(TLRPC.Chat chat) {
         Config config = getInstance().getConfig();
         if (config == null || config.chatOverrides == null) {

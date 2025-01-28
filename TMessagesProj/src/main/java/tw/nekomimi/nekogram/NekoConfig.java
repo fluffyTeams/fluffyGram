@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 import app.nekogram.translator.DeepLTranslator;
-import tw.nekomimi.nekogram.helpers.AnalyticsHelper;
 import tw.nekomimi.nekogram.helpers.CloudSettingsHelper;
 import tw.nekomimi.nekogram.helpers.LensHelper;
 import tw.nekomimi.nekogram.translator.Translator;
@@ -161,7 +160,6 @@ public class NekoConfig {
     private static final SharedPreferences.OnSharedPreferenceChangeListener listener = (preferences, key) -> {
         var map = new HashMap<String, String>(1);
         map.put("key", key);
-        AnalyticsHelper.trackEvent("neko_config_changed", map);
 
         CloudSettingsHelper.getInstance().doAutoSync();
     };
@@ -271,7 +269,6 @@ public class NekoConfig {
                 var map = new HashMap<String, String>();
                 map.put("buildType", BuildConfig.BUILD_TYPE);
                 map.put("isChineseUser", String.valueOf(isChineseUser));
-                AnalyticsHelper.trackEvent("load_config", map);
             }
             configLoaded = true;
         }
