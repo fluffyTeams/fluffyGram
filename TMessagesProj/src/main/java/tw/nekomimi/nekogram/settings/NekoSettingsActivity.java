@@ -10,10 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.R;
+import org.telegram.messenger.browser.Browser;
 import org.telegram.ui.Cells.HeaderCell;
 import org.telegram.ui.Cells.TextCell;
 import org.telegram.ui.Cells.TextDetailSettingsCell;
 import org.telegram.ui.Cells.TextSettingsCell;
+import org.telegram.ui.LaunchActivity;
 
 import tw.nekomimi.nekogram.NekoConfig;
 import tw.nekomimi.nekogram.accessibility.AccessibilitySettingsActivity;
@@ -90,9 +92,6 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
             });
             checkingUpdate = true;
             listAdapter.notifyItemChanged(checkUpdateRow);
-        } else if (position >= sponsorRow && position < sponsor2Row) {
-            ConfigHelper.News item = news.get(position - sponsorRow);
-            Browser.openUrl(getParentActivity(), item.url);
         }
     }
 
@@ -142,14 +141,9 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
         checkUpdateRow = addRow("checkUpdate");
         about2Row = addRow();
 
-        if (!news.isEmpty()) {
-            sponsorRow = addRow();
-            rowCount += news.size() - 1;
-            sponsor2Row = addRow();
-        } else {
-            sponsorRow = -1;
-            sponsor2Row = -1;
-        }
+        sponsorRow = -1;
+        sponsor2Row = -1;
+
     }
 
     private class ListAdapter extends BaseListAdapter {
@@ -188,13 +182,6 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
                         textCell.setTextAndValue(LocaleController.getString(R.string.Translation), LocaleController.getString(R.string.TranslationAbout), divider);
                     } else if (position == donateRow) {
                         textCell.setTextAndValue(LocaleController.getString(R.string.Donate), LocaleController.getString(R.string.DonateAbout), divider);
-                    } else if (position == checkUpdateRow) {
-                        textCell.setTextAndValue(LocaleController.getString(R.string.CheckUpdate),
-                                checkingUpdate ? LocaleController.getString(R.string.CheckingUpdate) :
-                                        UpdateHelper.formatDateUpdate(SharedConfig.lastUpdateCheckTime), divider);
-                    } else if (position >= sponsorRow && position < sponsor2Row) {
-                        ConfigHelper.News item = news.get(position - sponsorRow);
-                        textCell.setTextAndValue(item.title, item.summary, divider);
                     }
                     break;
                 }
